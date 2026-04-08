@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Express Booking Confirmed | Weekndr · Nathan Lane Travel</title>
+<meta name="description" content="Your express booking fee is confirmed. Let's start planning your trip fast.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --brand:        #1749FF;
+  --brand-mid:    #1235CC;
+  --brand-light:  #4A6FFF;
+  --brand-pale:   #EEF2FF;
+  --bg:           #FFFFFF;
+  --bg-mid:       #F5F7FF;
+  --ink:          #0A0A14;
+  --ink-mid:      #1E1E2E;
+  --ink-light:    #4A4A6A;
+  --muted:        #94A3B8;
+  --border:       rgba(0,0,0,0.08);
+  --radius:       18px;
+  --radius-sm:    12px;
+  --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+  --font-head:    'Sora', sans-serif;
+  --font-body:    'Outfit', sans-serif;
+  --green:        #16A34A;
+  --green-pale:   #DCFCE7;
+  --amber:        #D97706;
+  --amber-pale:   #FEF3C7;
+}
+
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 80px;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── PAGE ── */
+.page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 72px 32px 100px;
+  animation: fadeUp 0.65s var(--ease) both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── HERO ── */
+.hero { text-align: center; margin-bottom: 52px; }
+
+.check-ring {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--green-pale);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28px;
+  animation: pop 0.55s var(--ease) 0.1s both;
+}
+
+@keyframes pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.check-ring svg { width: 36px; height: 36px; stroke: var(--green); }
+
+.tier-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--amber-pale); color: var(--amber);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 1.8px;
+  text-transform: uppercase; padding: 5px 14px; border-radius: 100px;
+  margin-bottom: 18px;
+}
+.tier-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
+
+.hero h1 {
+  font-family: var(--font-head);
+  font-size: clamp(1.9rem, 5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+
+.hero p {
+  font-size: 1.05rem;
+  color: var(--ink-light);
+  line-height: 1.75;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ── EXPRESS BANNER ── */
+.express-banner {
+  background: linear-gradient(135deg, var(--ink-mid) 0%, #2a1f6e 100%);
+  border-radius: var(--radius-sm);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(23,73,255,0.2);
+}
+
+.express-icon { font-size: 1.6rem; flex-shrink: 0; }
+
+.express-banner-text strong {
+  display: block;
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 2px;
+}
+
+.express-banner-text span {
+  font-size: 0.83rem;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ── INFO CARDS ── */
+.info-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+
+.info-card {
+  background: var(--bg-mid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 22px 20px;
+}
+
+.info-card-icon { font-size: 1.4rem; margin-bottom: 10px; }
+
+.info-card-label {
+  font-family: var(--font-head);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+.info-card-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.info-card-value span {
+  font-weight: 400;
+  color: var(--ink-light);
+}
+
+/* ── MAIN CTA ── */
+.main-cta-block {
+  background: var(--ink-mid);
+  border-radius: var(--radius);
+  padding: 40px 36px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.main-cta-block h2 {
+  font-family: var(--font-head);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+.main-cta-block p {
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+.urgent-note {
+  display: inline-block;
+  background: rgba(217,119,6,0.15);
+  color: #FCD34D;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(217,119,6,0.25);
+}
+
+.btn-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--brand);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 15px 32px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.25s var(--ease);
+  letter-spacing: 0.01em;
+}
+
+.btn-start:hover {
+  background: var(--brand-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(23,73,255,0.35);
+}
+
+/* ── PROMO CODE ── */
+.promo-block {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  padding: 28px 28px 24px;
+  text-align: center;
+  margin-bottom: 40px;
+  background: var(--bg-mid);
+  transition: border-color 0.25s;
+}
+
+.promo-block:hover { border-color: var(--brand); }
+
+.promo-eyebrow {
+  font-family: var(--font-head);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.promo-headline {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.promo-headline em {
+  color: var(--brand);
+  font-style: normal;
+}
+
+.promo-code-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.promo-code {
+  font-family: 'Courier New', monospace;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--brand);
+  background: white;
+  border: 1.5px solid rgba(23,73,255,0.2);
+  border-radius: 8px;
+  padding: 10px 20px;
+  user-select: all;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--brand-pale);
+  color: var(--brand);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover { background: var(--brand); color: white; }
+.copy-btn.copied { background: var(--green-pale); color: var(--green); }
+
+.promo-fine {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 14px;
+  line-height: 1.5;
+}
+
+/* ── NEXT STEPS ── */
+.steps-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+  background: var(--bg-mid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.step-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.step-row:last-child { border-bottom: none; }
+
+.step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--brand); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head); font-weight: 700; font-size: 0.78rem;
+  flex-shrink: 0; margin-top: 1px;
+}
+
+.step-num.done { background: var(--green); }
+
+.step-text strong {
+  font-family: var(--font-head);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.step-text span {
+  font-size: 0.83rem;
+  color: var(--ink-light);
+  line-height: 1.5;
+}
+
+/* ── BOTTOM LINKS ── */
+.bottom-links {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 12px 24px; border-radius: 100px;
+  font-family: var(--font-body); font-size: 0.85rem; font-weight: 600;
+  border: 1.5px solid var(--border); color: var(--ink-light);
+  text-decoration: none; transition: all 0.2s;
+}
+
+.btn-outline:hover { border-color: var(--brand); color: var(--brand); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  body { padding-top: 70px; }
+  .page { padding: 48px 20px 80px; }
+  .info-cards { grid-template-columns: 1fr; }
+  .main-cta-block { padding: 28px 20px; }
+  .promo-block { padding: 22px 16px 20px; }
+  .promo-code { font-size: 1.05rem; letter-spacing: 2px; padding: 8px 14px; }
+  .express-banner { flex-direction: column; text-align: center; }
+  .bottom-links { flex-direction: column; }
+  .btn-outline { justify-content: center; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="check-ring">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <div class="tier-badge"><span class="tier-badge-dot"></span> Express Booking</div>
+    <h1>Your booking fee<br>is confirmed.</h1>
+    <p>You'll receive an email shortly confirming your purchase. You're on Express — that means I'm moving fast, so let's get your form in right away.</p>
+  </div>
+
+  <!-- EXPRESS BANNER -->
+  <div class="express-banner">
+    <div class="express-icon">⚡</div>
+    <div class="express-banner-text">
+      <strong>You're on Express — proposal within 48 hours</strong>
+      <span>The clock starts when you submit your trip intake form. Fill it out now to lock in your timeline.</span>
+    </div>
+  </div>
+
+  <!-- INFO CARDS -->
+  <div class="info-cards">
+    <div class="info-card">
+      <div class="info-card-icon">📧</div>
+      <div class="info-card-label">Email Confirmation</div>
+      <div class="info-card-value">On its way to your inbox <span>— check your spam if you don't see it</span></div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">⚡</div>
+      <div class="info-card-label">Proposal Timeline</div>
+      <div class="info-card-value">Express delivery <span>— within 48 hours of form submission</span></div>
+    </div>
+  </div>
+
+  <!-- MAIN CTA -->
+  <div class="main-cta-block">
+    <h2>Next step: fill out your trip intake form</h2>
+    <div class="urgent-note">⏱ Your 48-hour clock starts when you submit</div>
+    <p>Tell me your destination, dates, budget, vibe, and everything I need to build your proposal. The sooner you submit, the sooner I get started.</p>
+    <a href="https://weekndrtravelco.short.gy/start-here" class="btn-start" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 19-7z"/></svg>
+      Start My Trip Form Now
+    </a>
+  </div>
+
+  <!-- PROMO CODE -->
+  <div class="promo-block">
+    <div class="promo-eyebrow">Exclusive Offer — Just for You</div>
+    <div class="promo-headline">Get <em>50% off</em> a future booking fee</div>
+    <div class="promo-code-wrap">
+      <div class="promo-code" id="promoCode">GETAWAY50</div>
+      <button class="copy-btn" id="copyBtn" onclick="copyCode()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <div class="promo-fine">Save this code — share it with a friend or use it yourself on your next trip. Valid on Standard or Express booking fees.</div>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="steps-row">
+    <div class="step-row">
+      <div class="step-num done">✓</div>
+      <div class="step-text">
+        <strong>Express booking fee paid</strong>
+        <span>You're locked in. Email confirmation is on its way.</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-text">
+        <strong>Fill out your trip form — right now</strong>
+        <span>Your 48-hour window starts the moment you submit. Don't wait on this one.</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-text">
+        <strong>Receive your proposal within 48 hours</strong>
+        <span>A personalized proposal with hotel options, experiences, and pricing — fast.</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div class="step-text">
+        <strong>Pick what you want, I handle the rest</strong>
+        <span>Once you choose, I book everything and send you a complete digital itinerary.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM LINKS -->
+  <div class="bottom-links">
+    <a href="destinations.html" class="btn-outline">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Browse Destinations
+    </a>
+    <a href="index.html" class="btn-outline">Return Home</a>
+  </div>
+
+</div>
+
+<script>
+function copyCode() {
+  const code = document.getElementById('promoCode').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy`;
+    }, 3000);
+  });
+}
+</script>
+
+<script src="js/layout.js"></script>
+</body>
+</html>

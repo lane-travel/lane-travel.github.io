@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy, Terms & Conditions - Weekndr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ============ RESET & VARIABLES ============ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --brand:       #1749FF;
+  --brand-mid:   #1235CC;
+  --brand-light: #4A6FFF;
+  --brand-pale:  #EEF2FF;
+  --accent:      #1749FF;
+  --accent-light:#4A6FFF;
+  --accent-pale: #EEF2FF;
+  --bg:          #FFFFFF;
+  --bg-mid:      #F5F7FF;
+  --bg-dark:     #E2E8F0;
+  --ink:         #0A0A14;
+  --ink-mid:     #1E1E2E;
+  --ink-light:   #4A4A6A;
+  --muted:       #94A3B8;
+  --white:       #FFFFFF;
+
+  --nav-bg:      rgba(10, 10, 20, 0.96);
+  --border:      rgba(0,0,0,0.08);
+  --border-light:rgba(255,255,255,0.12);
+  --radius:      18px;
+  --radius-sm:   12px;
+  --ease:        cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow:      0 2px 16px rgba(24,21,15,0.08), 0 1px 4px rgba(24,21,15,0.05);
+  --shadow-hover:0 20px 48px rgba(24,21,15,0.18), 0 4px 16px rgba(24,21,15,0.08);
+
+  --font-display:'Outfit', sans-serif;
+  --font-head:   'Sora', sans-serif;
+  --font-body:   'Outfit', sans-serif;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 80px;
+}
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--brand); color: white; }
+
+/* ============ NAV ============ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--nav-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transition: all 0.4s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+nav.scrolled {
+  padding: 12px 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+}
+.nav-logo img {
+  height: 30px; width: auto; display: block;
+}
+.nav-logo-text { display: flex; flex-direction: column; gap: 0; }
+.nav-logo-name { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: white; letter-spacing: -0.3px; line-height: 1.1; }
+.nav-logo-sub  { font-family: var(--font-body); font-size: 9.5px; font-weight: 500; color: rgba(255,255,255,0.45); letter-spacing: 2px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-family: var(--font-body); font-size: 0.82rem; font-weight: 500;
+  color: rgba(255,255,255,0.6); transition: color 0.3s; letter-spacing: 0.01em;
+}
+.nav-links a:hover { color: white; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 22px; border-radius: 100px;
+  background: var(--brand); color: white;
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 700;
+  transition: all 0.3s var(--ease); cursor: pointer; border: none;
+  letter-spacing: 0.01em;
+}
+.nav-cta:hover { background: var(--brand-light); transform: translateY(-1px); }
+
+/* Hamburger */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px; background: none; border: none;
+}
+.hamburger span { display: block; width: 22px; height: 1.5px; background: white; transition: all 0.3s var(--ease); }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+.mobile-nav {
+  display: none; position: fixed; inset: 0; z-index: 99;
+  background: var(--brand); opacity: 0.98;
+  flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a { font-family: var(--font-head); font-size: 1.8rem; font-weight: 700; color: white; transition: opacity 0.3s; }
+.mobile-nav a:hover { opacity: 0.5; }
+.mobile-nav .mobile-cta { background: var(--brand-light); color: white; padding: 14px 36px; border-radius: 100px; font-size: 1rem; font-weight: 800; }
+
+/* ============ LEGAL CONTENT ============ */
+.legal-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 48px 80px;
+}
+
+.legal-header {
+  margin-bottom: 60px;
+  padding-bottom: 40px;
+  border-bottom: 2px solid var(--bg-dark);
+}
+
+.legal-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.legal-header p {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--ink-light);
+}
+
+.legal-section {
+  margin-bottom: 60px;
+}
+
+.legal-section h2 {
+  font-family: var(--font-head);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 24px;
+  margin-top: 40px;
+  letter-spacing: -0.01em;
+}
+
+.legal-section h3 {
+  font-family: var(--font-head);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink-mid);
+  margin-top: 24px;
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.legal-section p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink-light);
+  margin-bottom: 16px;
+  line-height: 1.8;
+}
+
+.legal-section ul {
+  margin-left: 20px;
+  margin-bottom: 16px;
+}
+
+.legal-section li {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink-light);
+  margin-bottom: 10px;
+  line-height: 1.8;
+}
+
+.disclosure-box {
+  background: var(--brand-pale);
+  border-left: 4px solid var(--brand);
+  padding: 20px;
+  margin: 20px 0 30px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+
+.disclosure-box strong {
+  font-weight: 700;
+}
+
+.last-updated {
+  background: var(--bg-mid);
+  padding: 24px;
+  border-radius: 12px;
+  margin-top: 60px;
+  border-top: 2px solid var(--bg-dark);
+}
+
+.last-updated p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink-light);
+  margin-bottom: 8px;
+}
+
+/* ============ FOOTER ============ */
+footer {
+  background: var(--ink-mid);
+  color: white;
+  padding: 64px 48px 20px;
+  margin-top: 0;
+}
+
+footer .footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-brand {}
+.footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.footer-logo img { height: 36px; width: auto; display: block; }
+
+.footer-tagline {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 280px;
+  line-height: 1.7;
+}
+
+.footer-links-col h4 {
+  font-family: var(--font-head);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 16px;
+}
+
+.footer-links-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links-col a {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+.footer-links-col a:hover { color: white; }
+
+footer > div:nth-child(2) {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px 0;
+  text-align: center;
+  margin-bottom: 8px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+footer > div:nth-child(2) p {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+footer > div:nth-child(2) a {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: underline;
+}
+
+footer > div:nth-child(2) a:hover {
+  color: white;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-copy {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer-love {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer-love a { color: rgba(255, 255, 255, 0.65); text-decoration: none; }
+.footer-love a:hover { color: white; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .legal-container { padding: 40px 32px 60px; }
+  footer .footer-top { grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .nav-right { gap: 15px; }
+  .hamburger { display: flex; }
+
+  body { padding-top: 70px; }
+
+  .legal-container { padding: 40px 20px 50px; }
+  .legal-header { margin-bottom: 40px; padding-bottom: 24px; }
+  .legal-header h1 { font-size: 1.8rem; }
+  .legal-header p { font-size: 0.95rem; }
+
+  .legal-section h2 { font-size: 1.5rem; margin-bottom: 20px; }
+  .legal-section h3 { font-size: 1.05rem; }
+  .legal-section p { font-size: 0.95rem; }
+
+  footer { padding: 40px 20px 16px; }
+  footer .footer-top { grid-template-columns: 1fr; gap: 30px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .footer-copy { text-align: center; }
+}
+
+</style>
+</head>
+<body>
+
+
+<!-- LEGAL CONTENT -->
+<div class="legal-container">
+  <div class="legal-header">
+    <h1>Privacy Policy, Terms & Conditions</h1>
+    <p>Legal disclosures and FCC affiliate disclosure for Weekndr</p>
+  </div>
+
+  <!-- FCC AFFILIATE DISCLOSURE -->
+  <div class="legal-section" id="fcc-affiliate-disclosure">
+    <h2>FCC Affiliate Disclosure</h2>
+
+    <div class="disclosure-box">
+      <strong>Important Notice:</strong> Weekndr participates in affiliate marketing programs. When you click on links or make purchases through certain links on our website, we may earn a commission at no additional cost to you. This helps support our business and allows us to continue providing travel planning services.
+    </div>
+
+    <h3>What This Means</h3>
+    <p>Weekndr has relationships with travel booking platforms, hotel chains, and other travel-related services. When you use affiliate links to make a booking or purchase, we may receive compensation from the merchant. This disclosure is made in accordance with the Federal Trade Commission (FTC) guidelines on endorsements and testimonials.</p>
+
+    <h3>Affiliate Programs We Participate In</h3>
+    <ul>
+      <li><strong>Hotel & Travel Booking Platforms:</strong> Booking.com, Expedia, Hotels.com, Viator, GetYourGuide, and similar travel service providers</li>
+      <li><strong>Amazon Associates:</strong> Travel-related products and gear recommended through Amazon</li>
+      <li><strong>Other Travel Partners:</strong> Additional travel companies and service providers whose links may appear on our site</li>
+    </ul>
+
+    <h3>How Affiliate Links Work</h3>
+    <p>Affiliate links are marked or identifiable through context. When you click an affiliate link and complete a purchase, the merchant may share a percentage of that sale with us. Your price does not change—you pay the same amount whether you click an affiliate link or go directly to the merchant's website.</p>
+
+    <h3>Our Commitment to You</h3>
+    <p>We only recommend products, services, and travel experiences we genuinely believe in. Our recommendations are based on real experience and professional expertise, not solely on the potential for affiliate commissions. We maintain editorial integrity and prioritize your satisfaction above all else.</p>
+
+    <p><strong>Questions about our affiliate relationships?</strong> Contact us at <a href="mailto:GoWeekndr@outlook.com">GoWeekndr@outlook.com</a></p>
+  </div>
+
+  <!-- PRIVACY POLICY -->
+  <div class="legal-section">
+    <h2>Privacy Policy</h2>
+
+    <h3>Introduction</h3>
+    <p>Weekndr ("we," "us," "our," or "Company") operates the Weekndr website and travel planning services. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.</p>
+
+    <h3>1. Information We Collect</h3>
+    <p>We collect information in the following ways:</p>
+    <ul>
+      <li><strong>Information You Provide:</strong> Name, email address, phone number, travel preferences, destination interests, and budget when you request a travel proposal or contact us</li>
+      <li><strong>Automatically Collected:</strong> IP address, browser type, operating system, pages visited, and time spent on site through cookies and similar technologies</li>
+      <li><strong>Communication Records:</strong> Emails, messages, and notes from our conversations about your travel planning</li>
+    </ul>
+
+    <h3>2. How We Use Your Information</h3>
+    <p>We use the information we collect to:</p>
+    <ul>
+      <li>Plan and customize your travel experiences</li>
+      <li>Send you travel proposals and itineraries</li>
+      <li>Respond to your inquiries and provide customer support</li>
+      <li>Improve our website and services</li>
+      <li>Send marketing communications (with your consent)</li>
+      <li>Comply with legal obligations</li>
+    </ul>
+
+    <h3>3. Information Sharing</h3>
+    <p>We do not sell your personal information. We may share your information with:</p>
+    <ul>
+      <li><strong>Travel Partners:</strong> Hotels, resorts, and tour operators necessary to book your travel</li>
+      <li><strong>Service Providers:</strong> Booking platforms and payment processors</li>
+      <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
+    </ul>
+
+    <h3>4. Cookies & Tracking</h3>
+    <p>We use cookies to enhance your experience. Cookies help us remember your preferences and understand how you use our site. You can control cookies through your browser settings.</p>
+
+    <h3>5. Data Security</h3>
+    <p>We implement reasonable security measures to protect your information. However, no method of transmission over the internet is 100% secure. We encourage you to use strong passwords and contact us immediately if you suspect unauthorized access.</p>
+
+    <h3>6. Your Rights</h3>
+    <p>You have the right to:</p>
+    <ul>
+      <li>Access the personal information we hold about you</li>
+      <li>Request corrections to inaccurate information</li>
+      <li>Opt-out of marketing communications</li>
+      <li>Request deletion of your information (subject to legal requirements)</li>
+    </ul>
+
+    <h3>7. Contact Us</h3>
+    <p>If you have privacy concerns or requests, contact us at <a href="mailto:GoWeekndr@outlook.com">GoWeekndr@outlook.com</a></p>
+  </div>
+
+  <!-- TERMS & CONDITIONS -->
+  <div class="legal-section">
+    <h2>Terms & Conditions</h2>
+
+    <h3>1. Agreement to Terms</h3>
+    <p>By accessing and using the Weekndr website and travel planning services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+
+    <h3>2. Use License</h3>
+    <p>Permission is granted to temporarily download one copy of the materials (information or software) on Weekndr for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+    <ul>
+      <li>Modify or copy the materials</li>
+      <li>Use the materials for any commercial purpose or for any public display</li>
+      <li>Attempt to decompile or reverse engineer any software contained on the site</li>
+      <li>Remove any copyright or other proprietary notations from the materials</li>
+      <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
+    </ul>
+
+    <h3>3. Disclaimer</h3>
+    <p>The materials on Weekndr are provided on an 'as is' basis. Weekndr makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+
+    <h3>4. Limitations</h3>
+    <p>In no event shall Weekndr or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Weekndr, even if Weekndr or an authorized representative has been notified orally or in writing of the possibility of such damage.</p>
+
+    <h3>5. Accuracy of Materials</h3>
+    <p>The materials appearing on Weekndr could include technical, typographical, or photographic errors. Weekndr does not warrant that any of the materials on the website are accurate, complete, or current. Weekndr may make changes to the materials contained on the website at any time without notice.</p>
+
+    <h3>6. Links</h3>
+    <p>Weekndr has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by Weekndr of the site. Use of any such linked website is at the user's own risk.</p>
+
+    <h3>7. Modifications</h3>
+    <p>Weekndr may revise these terms of service for the website at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.</p>
+
+    <h3>8. Governing Law</h3>
+    <p>These terms and conditions are governed by and construed in accordance with the laws of Nevada, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p>
+
+    <h3>9. Travel-Specific Terms</h3>
+    <p><strong>Travel Planning Services:</strong> Weekndr provides independent travel planning services. We are not a licensed travel agency, and your travel arrangements are subject to the terms and conditions of the individual service providers (airlines, hotels, resorts, tour operators, etc.). We recommend reviewing the terms of each provider carefully.</p>
+
+    <p><strong>Cancellation & Changes:</strong> Cancellation policies, change fees, and refund policies are determined by individual travel providers, not Weekndr. We will assist you in understanding these policies, but cannot override them.</p>
+
+    <p><strong>Service Not Available in Florida:</strong> Weekndr services are not available to residents of Florida.</p>
+
+    <h3>10. Contact Information</h3>
+    <p>If you have questions about these terms and conditions, please contact us at <a href="mailto:GoWeekndr@outlook.com">GoWeekndr@outlook.com</a></p>
+  </div>
+
+  <div class="last-updated">
+    <p><strong>Last Updated:</strong> April 2026</p>
+    <p>Weekndr reserves the right to update these policies at any time. Changes will be posted on this page with an updated "Last Updated" date.</p>
+  </div>
+</div>
+
+
+<script src="js/layout.js"></script>
+</body>
+</html>

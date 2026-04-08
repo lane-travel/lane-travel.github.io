@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works · Weekndr — Nathan Lane Travel</title>
+<meta name="description" content="See how trip planning works with Nathan Lane Travel. From intake form to interactive itinerary — I handle everything.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --brand:        #1749FF;
+  --brand-mid:    #1235CC;
+  --brand-light:  #4A6FFF;
+  --brand-pale:   #EEF2FF;
+  --bg:           #FFFFFF;
+  --bg-mid:       #F5F7FF;
+  --bg-dark:      #E2E8F0;
+  --ink:          #0A0A14;
+  --ink-mid:      #1E1E2E;
+  --ink-light:    #4A4A6A;
+  --muted:        #94A3B8;
+  --nav-bg:       rgba(10, 10, 20, 0.96);
+  --border:       rgba(0,0,0,0.08);
+  --radius:       18px;
+  --radius-sm:    12px;
+  --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow:       0 2px 16px rgba(24,21,15,0.08), 0 1px 4px rgba(24,21,15,0.05);
+  --font-display: 'Outfit', sans-serif;
+  --font-head:    'Sora', sans-serif;
+  --font-body:    'Outfit', sans-serif;
+  --amber:        #D97706;
+  --amber-pale:   #FEF3C7;
+  --green:        #16A34A;
+  --green-pale:   #DCFCE7;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 80px;
+}
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--brand); color: white; }
+
+/* ─── HERO ─── */
+.hero {
+  padding: 80px 48px 100px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeUp 0.7s var(--ease) both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--brand-pale);
+  color: var(--brand);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
+
+.hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--brand-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 1.12rem;
+  color: var(--ink-light);
+  line-height: 1.8;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ─── SECTION SHARED ─── */
+.section-eyebrow {
+  font-family: var(--font-head);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+
+.section-sub {
+  font-size: 1.05rem;
+  color: var(--ink-light);
+  line-height: 1.75;
+  max-width: 600px;
+}
+
+/* ─── BOOKING CARDS ─── */
+.booking-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px 100px;
+}
+
+.booking-section .section-title { text-align: center; }
+.booking-section .section-eyebrow { text-align: center; }
+.booking-section .section-sub { text-align: center; margin: 0 auto 48px; }
+
+.booking-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.booking-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.35s var(--ease);
+  box-shadow: 0 4px 20px rgba(24,21,15,0.04);
+}
+
+.booking-card:hover {
+  border-color: var(--brand-light);
+  box-shadow: 0 20px 56px rgba(23,73,255,0.12);
+  transform: translateY(-6px);
+}
+
+.booking-card.featured {
+  border-color: var(--brand);
+  background: linear-gradient(135deg, rgba(23,73,255,0.06) 0%, var(--brand-pale) 100%);
+}
+
+.booking-card.featured:hover {
+  box-shadow: 0 28px 72px rgba(23,73,255,0.18);
+  transform: translateY(-10px);
+}
+
+.card-badge {
+  position: absolute;
+  top: -13px;
+  left: 28px;
+  background: var(--brand);
+  color: white;
+  padding: 6px 18px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.card-sub {
+  font-size: 0.92rem;
+  color: var(--ink-light);
+  font-weight: 500;
+  margin-bottom: 32px;
+}
+
+.card-details { flex-grow: 1; margin-bottom: 28px; }
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.detail-icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  background: var(--brand-pale);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.featured .detail-icon { background: rgba(255,255,255,0.75); }
+
+.detail-row span { color: var(--ink-light); }
+.detail-row strong { color: var(--ink); font-weight: 700; }
+
+.card-cta {
+  display: block;
+  text-align: center;
+  background: var(--brand);
+  color: white;
+  padding: 15px 28px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  transition: all 0.3s var(--ease);
+  box-shadow: 0 4px 16px rgba(23,73,255,0.2);
+}
+
+.card-cta:hover {
+  background: var(--brand-light);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(23,73,255,0.3);
+}
+
+/* ─── PROCESS TIMELINE ─── */
+.process-section {
+  background: var(--bg-mid);
+  padding: 100px 48px;
+  position: relative;
+}
+
+.process-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brand), transparent);
+  opacity: 0.3;
+}
+
+.process-header {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 72px;
+}
+
+.timeline {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 40px;
+  bottom: 40px;
+  width: 2px;
+  background: var(--border);
+}
+
+.tl-step {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  padding-bottom: 44px;
+  position: relative;
+}
+
+.tl-step:last-child { padding-bottom: 0; }
+
+.tl-num {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--brand);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.tl-step:hover .tl-num {
+  background: var(--brand);
+  color: white;
+  border-color: var(--brand);
+  box-shadow: 0 4px 16px rgba(23,73,255,0.25);
+}
+
+.tl-content {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 28px 28px 24px;
+  flex: 1;
+  transition: all 0.3s var(--ease);
+}
+
+.tl-step:hover .tl-content {
+  border-color: var(--brand-light);
+  box-shadow: 0 8px 24px rgba(23,73,255,0.08);
+}
+
+.tl-who {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+}
+
+.tl-who.you { background: var(--amber-pale); color: var(--amber); }
+.tl-who.nate { background: var(--brand-pale); color: var(--brand); }
+
+.tl-title {
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.tl-desc {
+  font-size: 0.88rem;
+  color: var(--ink-light);
+  line-height: 1.65;
+}
+
+/* ─── WHAT YOU GET ─── */
+.deliverables-section {
+  padding: 100px 48px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.deliverables-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.deliverables-header .section-sub { margin: 0 auto; text-align: center; }
+
+.del-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.del-card {
+  background: var(--bg-mid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 32px 26px;
+  text-align: center;
+  transition: all 0.3s var(--ease);
+}
+
+.del-card:hover {
+  border-color: var(--brand-light);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(23,73,255,0.08);
+}
+
+.del-icon { font-size: 2rem; margin-bottom: 16px; }
+
+.del-title {
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.del-desc {
+  font-size: 0.85rem;
+  color: var(--ink-light);
+  line-height: 1.6;
+}
+
+/* ─── SMS CONCIERGE UPSELL ─── */
+.upsell-section {
+  background: var(--ink-mid);
+  padding: 80px 48px;
+}
+
+.upsell-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  gap: 48px;
+  align-items: center;
+}
+
+.upsell-content { flex: 1; }
+
+.upsell-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.6);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.upsell-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.upsell-desc {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+
+.upsell-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.upsell-perk {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.7);
+}
+
+.upsell-perk svg { flex-shrink: 0; margin-top: 2px; }
+
+.upsell-card {
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  text-align: center;
+  width: 260px;
+}
+
+.upsell-price {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.upsell-price-sub {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 8px;
+}
+
+.upsell-hours {
+  font-size: 0.78rem;
+  color: var(--brand-light);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.upsell-compare {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.5;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.upsell-compare strong {
+  color: rgba(255,255,255,0.55);
+}
+
+/* ─── FINAL CTA ─── */
+.final-cta {
+  padding: 100px 48px;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.final-cta .section-title { margin-bottom: 14px; }
+.final-cta .section-sub { margin: 0 auto 40px; text-align: center; }
+
+.cta-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--brand);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.25s var(--ease);
+}
+
+.btn-primary:hover {
+  background: var(--brand-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(23,73,255,0.3);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 30px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: 1.5px solid var(--border);
+  color: var(--ink-light);
+  transition: all 0.2s;
+}
+
+.btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .booking-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+  .del-grid { grid-template-columns: 1fr 1fr; }
+  .upsell-wrap { flex-direction: column; text-align: center; }
+  .upsell-card { width: 100%; max-width: 320px; margin: 0 auto; }
+  .upsell-perks { align-items: center; }
+}
+
+@media (max-width: 768px) {
+  body { padding-top: 70px; }
+  .hero { padding: 60px 20px 80px; }
+  .hero h1 { font-size: 2rem; }
+
+  .booking-section { padding: 0 20px 80px; }
+  .booking-card { padding: 36px 24px; }
+
+  .process-section { padding: 80px 20px; }
+  .timeline::before { left: 19px; }
+  .tl-num { width: 40px; height: 40px; font-size: 0.8rem; }
+  .tl-step { gap: 18px; }
+  .tl-content { padding: 20px 18px 18px; }
+
+  .deliverables-section { padding: 80px 20px; }
+  .del-grid { grid-template-columns: 1fr; }
+
+  .upsell-section { padding: 60px 20px; }
+
+  .final-cta { padding: 80px 20px; }
+  .cta-row { flex-direction: column; }
+  .btn-primary, .btn-ghost { justify-content: center; width: 100%; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-eyebrow"><span></span> How It Works</div>
+  <h1>You tell me the dream.<br>I build the trip.</h1>
+  <p>Choose your pace, fill out a quick form, and I handle everything from there — research, proposals, bookings, confirmations, and a complete digital itinerary. No guesswork. No stress.</p>
+</div>
+
+<!-- ─── BOOKING OPTIONS ─── -->
+<div class="booking-section">
+  <div class="section-eyebrow">Choose Your Service Level</div>
+  <div class="section-title">Two ways to get started</div>
+  <p class="section-sub">Pay the booking fee, fill out the intake form, and I start building your trip. Same full-service experience — you just pick the speed.</p>
+
+  <div class="booking-grid">
+    <!-- EXPRESS -->
+    <div class="booking-card featured">
+      <div class="card-badge">Most Popular</div>
+      <h3 class="card-title">Express</h3>
+      <p class="card-sub">Proposal within 48 hours</p>
+      <div class="card-details">
+        <div class="detail-row">
+          <div class="detail-icon">⚡</div>
+          <span><strong>48-hour</strong> proposal turnaround</span>
+        </div>
+        <div class="detail-row">
+          <div class="detail-icon">🚀</div>
+          <span>Fast-tracked research & booking</span>
+        </div>
+        <div class="detail-row">
+          <div class="detail-icon">📋</div>
+          <span>Custom proposal with options to pick from</span>
+        </div>
+        <div class="detail-row">
+          <div class="detail-icon">🎫</div>
+          <span>All reservations & bookings handled</span>
+        </div>
+        <div class="detail-row">
+          <div class="detail-icon">📱</div>
+          <span>Interactive digital itinerary included</span>
+        </div>
+        <div class="detail-row">
+          <div class="detail-icon">💬</div>
+          <span>SMS Concierge add-on available</span>
+        </div>
+      </div>
+      <a href="https://payments-na2.hubspot.com/payments/jn4hW9ccWjD?referrer=PAYMENT_LINK" class="card-cta">Get Started — Express</a>
+    </div>
+
+    <!-- STANDARD -->
+    <div class="booking-card">
+      <h3 class="card-title">Standard</h3>
+      <p class="card-sub">Proposal within 7 days</p>
+      <div class="card-details">
+        <div class="detail-row">
+          <div class="detail-icon">⏱️</div>
+          <span><strong>Up to 7 days</strong> proposal delivery</span>
+        </div>
+        <div class="detail-row">
+          <div class="detail-icon">✨</div>
+          <span>Deep research for the best options</span>
+        </div>
+        <div class="detail-row">
+          <div class="detail-icon">📋</div>
+          <span>Custom proposal with options to pick from</span>
+        </div>
+        <div class="detail-row">
+          <div class="detail-icon">🎫</div>
+          <span>All reservations & bookings handled</span>
+        </div>
+        <div class="detail-row">
+          <div class="detail-icon">📱</div>
+          <span>Interactive digital itinerary included</span>
+        </div>
+        <div class="detail-row">
+          <div class="detail-icon">💬</div>
+          <span>SMS Concierge add-on available</span>
+        </div>
+      </div>
+      <a href="https://payments-na2.hubspot.com/payments/PVsjqp27nPdH2qFp?referrer=PAYMENT_LINK" class="card-cta">Get Started — Standard</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PROCESS TIMELINE ─── -->
+<div class="process-section">
+  <div class="process-header">
+    <div class="section-eyebrow">The Full Process</div>
+    <h2 class="section-title">From intake form to packed bags</h2>
+    <p class="section-sub" style="margin:0 auto;">Here's exactly what happens after you pay your booking fee — step by step, no surprises.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-step">
+      <div class="tl-num">1</div>
+      <div class="tl-content">
+        <span class="tl-who you">You</span>
+        <div class="tl-title">Fill out the trip intake form</div>
+        <div class="tl-desc">After you pay, you'll get a link to a quick form. Tell me your destination, dates, budget, vibe, and what matters most. This is what I build your entire trip around — so the more detail, the better.</div>
+      </div>
+    </div>
+
+    <div class="tl-step">
+      <div class="tl-num">2</div>
+      <div class="tl-content">
+        <span class="tl-who nate">Nate</span>
+        <div class="tl-title">I send you a custom proposal</div>
+        <div class="tl-desc">I research hotels, experiences, dining, and anything that fits your trip. You'll get a personalized proposal page with multiple options to browse — hotels with photos, pricing, descriptions, and my honest take on each one. Not a generic list — real options curated for you.</div>
+      </div>
+    </div>
+
+    <div class="tl-step">
+      <div class="tl-num">3</div>
+      <div class="tl-content">
+        <span class="tl-who you">You</span>
+        <div class="tl-title">Pick the options you love</div>
+        <div class="tl-desc">Go through the proposal on your own time. Select which hotel, which experiences, and which add-ons you want. You can mix and match. No calls required — though I'm always available if you have questions.</div>
+      </div>
+    </div>
+
+    <div class="tl-step">
+      <div class="tl-num">4</div>
+      <div class="tl-content">
+        <span class="tl-who nate">Nate</span>
+        <div class="tl-title">I create a final quote and collect payment info</div>
+        <div class="tl-desc">Based on what you picked, I put together a final quote with the total cost. Once you approve it, I'll collect your card info through a secure link to start booking everything.</div>
+      </div>
+    </div>
+
+    <div class="tl-step">
+      <div class="tl-num">5</div>
+      <div class="tl-content">
+        <span class="tl-who nate">Nate</span>
+        <div class="tl-title">I book your entire trip</div>
+        <div class="tl-desc">Hotels, experiences, dinner reservations, show tickets — whatever you selected, I book it all. I never do flights (that's on you), but everything else is handled.</div>
+      </div>
+    </div>
+
+    <div class="tl-step">
+      <div class="tl-num">6</div>
+      <div class="tl-content">
+        <span class="tl-who nate">Nate</span>
+        <div class="tl-title">Confirmations come in as I book</div>
+        <div class="tl-desc">As each booking is confirmed, I forward the confirmation your way. You'll see them trickle in — hotels, reservations, tickets — so you always know where things stand.</div>
+      </div>
+    </div>
+
+    <div class="tl-step">
+      <div class="tl-num">7</div>
+      <div class="tl-content">
+        <span class="tl-who nate">Nate</span>
+        <div class="tl-title">You get a final trip packet + interactive itinerary</div>
+        <div class="tl-desc">Once everything is booked, I send you one clean email with every confirmation organized in one place — plus a full interactive digital itinerary. Your itinerary includes your full day-by-day schedule, hotel details, check-in/check-out times, reservation info, directions, tips, maps, and everything you need in one shareable page. It's your entire trip in your pocket.</div>
+      </div>
+    </div>
+
+    <div class="tl-step">
+      <div class="tl-num">8</div>
+      <div class="tl-content">
+        <span class="tl-who nate">Nate</span>
+        <div class="tl-title">Day before your trip: final itinerary resend + last call</div>
+        <div class="tl-desc">The day before you leave, I resend your digital itinerary so it's right at the top of your inbox. This is also your last chance to add the SMS Concierge if you haven't already — because once your trip starts, I can't help you on the fly without it.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── WHAT YOU GET ─── -->
+<div class="deliverables-section">
+  <div class="deliverables-header">
+    <div class="section-eyebrow">What's Included</div>
+    <h2 class="section-title">Everything in one place</h2>
+    <p class="section-sub">Every trip comes with these deliverables — no matter which speed you choose.</p>
+  </div>
+
+  <div class="del-grid">
+    <div class="del-card">
+      <div class="del-icon">📋</div>
+      <div class="del-title">Custom Proposal</div>
+      <div class="del-desc">A personalized page with hotel options, experiences, pricing, and my honest recommendations — all laid out for you to browse and pick from.</div>
+    </div>
+    <div class="del-card">
+      <div class="del-icon">📱</div>
+      <div class="del-title">Interactive Itinerary</div>
+      <div class="del-desc">A digital day-by-day itinerary with your schedule, hotel info, check-in times, directions, maps, tips, and every confirmation — shareable and mobile-friendly.</div>
+    </div>
+    <div class="del-card">
+      <div class="del-icon">📦</div>
+      <div class="del-title">Final Trip Packet</div>
+      <div class="del-desc">One email with all your confirmations organized in one place. Hotels, restaurants, experiences, tickets — everything neatly packaged so you never have to dig through emails.</div>
+    </div>
+    <div class="del-card">
+      <div class="del-icon">🎫</div>
+      <div class="del-title">All Bookings Handled</div>
+      <div class="del-desc">Hotels, dining, experiences, shows, transfers — I book it all. You just need to handle your own flights.</div>
+    </div>
+    <div class="del-card">
+      <div class="del-icon">🔔</div>
+      <div class="del-title">Real-Time Confirmations</div>
+      <div class="del-desc">As each piece of your trip gets booked, I send you the confirmation immediately. No waiting until the end.</div>
+    </div>
+    <div class="del-card">
+      <div class="del-icon">📩</div>
+      <div class="del-title">Day-Before Reminder</div>
+      <div class="del-desc">The day before your trip, you get a fresh copy of your full itinerary right at the top of your inbox. Ready to go.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SMS CONCIERGE UPSELL ─── -->
+<div class="upsell-section">
+  <div class="upsell-wrap">
+    <div class="upsell-content">
+      <div class="upsell-badge">💬 Add-On</div>
+      <div class="upsell-title">SMS Concierge<br>for your trip</div>
+      <div class="upsell-desc">Once your trip starts, my planning work is done — I can't jump in and help on the fly without this. The SMS Concierge gives you a direct text line to me during your entire trip, so you're never stuck figuring things out alone.</div>
+      <div class="upsell-perks">
+        <div class="upsell-perk">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4A6FFF" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+          Text me anytime from 10am – 10pm PST during your trip
+        </div>
+        <div class="upsell-perk">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4A6FFF" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+          Last-minute reservations, changes, recommendations
+        </div>
+        <div class="upsell-perk">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4A6FFF" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+          Real-time help when plans change or you need a pivot
+        </div>
+        <div class="upsell-perk">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4A6FFF" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+          Offered in the final follow-up email + day-before reminder
+        </div>
+      </div>
+    </div>
+    <div class="upsell-card">
+      <div class="upsell-price">$150</div>
+      <div class="upsell-price-sub">per trip</div>
+      <div class="upsell-hours">10am – 10pm PST</div>
+      <div class="upsell-compare">Without this, the only way to get live support is a <strong>$50 consultation call</strong> booked through Google Meet — and that's per session, not per trip.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FINAL CTA ─── -->
+<div class="final-cta">
+  <div class="section-eyebrow">Ready?</div>
+  <h2 class="section-title">Let's build your trip.</h2>
+  <p class="section-sub">Pick your pace, pay the booking fee, and I take it from there.</p>
+  <div class="cta-row">
+    <a href="https://payments-na2.hubspot.com/payments/jn4hW9ccWjD?referrer=PAYMENT_LINK" class="btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 19-7z"/></svg>
+      Express — 48 Hours
+    </a>
+    <a href="https://payments-na2.hubspot.com/payments/PVsjqp27nPdH2qFp?referrer=PAYMENT_LINK" class="btn-ghost">Standard — Up to 7 Days</a>
+  </div>
+</div>
+
+<script src="js/layout.js"></script>
+</body>
+</html>

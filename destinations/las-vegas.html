@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- TEMPLATE: Update title, description, and og:image for each city -->
+<title>Las Vegas Trip Guide — Weekndr · Nathan Lane Travel</title>
+<meta name="description" content="Your complete Las Vegas trip, expertly planned. Restaurants, hotels, activities, pro tips, and exclusive deals — all for just $9.99. Skip the research. Travel like a local.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ============ RESET & VARIABLES (matches site) ============ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --brand:       #1749FF;
+  --brand-mid:   #1235CC;
+  --brand-light: #4A6FFF;
+  --brand-pale:  #EEF2FF;
+  --accent:      #1749FF;
+  --accent-light:#4A6FFF;
+  --accent-pale: #EEF2FF;
+  --bg:          #FFFFFF;
+  --bg-mid:      #F5F7FF;
+  --bg-dark:     #E2E8F0;
+  --ink:         #0A0A14;
+  --ink-mid:     #1E1E2E;
+  --ink-light:   #4A4A6A;
+  --muted:       #94A3B8;
+  --white:       #FFFFFF;
+
+  --nav-bg:      rgba(10, 10, 20, 0.96);
+  --border:      rgba(0,0,0,0.08);
+  --border-light:rgba(255,255,255,0.12);
+  --radius:      18px;
+  --radius-sm:   12px;
+  --ease:        cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow:      0 2px 16px rgba(24,21,15,0.08), 0 1px 4px rgba(24,21,15,0.05);
+  --shadow-hover:0 20px 48px rgba(24,21,15,0.18), 0 4px 16px rgba(24,21,15,0.08);
+
+  --font-display:'Outfit', sans-serif;
+  --font-head:   'Sora', sans-serif;
+  --font-body:   'Outfit', sans-serif;
+
+  --city-glow:   rgba(23, 73, 255, 0.15);
+  --city-accent: #1749FF;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--brand); color: white; }
+
+/* ============ NAV ============ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--nav-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transition: all 0.4s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+nav.scrolled { padding: 12px 48px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.nav-logo img { height: 30px; width: auto; display: block; }
+.nav-logo-text { display: flex; flex-direction: column; gap: 0; }
+.nav-logo-name { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: white; letter-spacing: -0.3px; line-height: 1.1; }
+.nav-logo-sub  { font-family: var(--font-body); font-size: 9.5px; font-weight: 500; color: rgba(255,255,255,0.45); letter-spacing: 2px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.6); transition: color 0.3s; letter-spacing: 0.01em; }
+.nav-links a:hover { color: white; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 22px; border-radius: 100px;
+  background: var(--brand); color: white;
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 700;
+  transition: all 0.3s var(--ease); cursor: pointer; border: none;
+  letter-spacing: 0.01em;
+}
+.nav-cta:hover { background: var(--brand-light); transform: translateY(-1px); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+.hamburger span { display: block; width: 22px; height: 1.5px; background: white; transition: all 0.3s var(--ease); }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+.mobile-nav {
+  display: none; position: fixed; inset: 0; z-index: 99;
+  background: var(--brand); opacity: 0.98;
+  flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a { font-family: var(--font-head); font-size: 1.8rem; font-weight: 700; color: white; transition: opacity 0.3s; }
+.mobile-nav a:hover { opacity: 0.5; }
+.mobile-nav .mobile-cta { background: var(--brand-light); color: white; padding: 14px 36px; border-radius: 100px; font-size: 1rem; font-weight: 800; }
+
+/* ============ BUTTONS ============ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 30px; border-radius: 100px;
+  font-family: var(--font-body); font-size: 0.88rem;
+  font-weight: 700; transition: all 0.35s var(--ease);
+  cursor: pointer; border: none; letter-spacing: 0.01em;
+}
+.btn-primary { background: var(--brand); color: white; }
+.btn-primary:hover { transform: translateY(-2px); background: var(--brand-mid); box-shadow: 0 8px 32px rgba(23,73,255,0.3); }
+.btn-outline { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.35); }
+.btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+.btn-outline-dark { background: transparent; color: var(--ink); border: 1.5px solid var(--bg-dark); }
+.btn-outline-dark:hover { border-color: var(--brand); color: var(--brand); transform: translateY(-2px); }
+.btn-lg { padding: 18px 40px; font-size: 1rem; }
+.btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* ============ SECTION COMMONS ============ */
+.section-label { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.label-line { width: 32px; height: 2px; background: var(--brand); border-radius: 2px; }
+.label-text { font-family: var(--font-head); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--brand-mid); }
+.section-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 4.5vw, 3.4rem); letter-spacing: -0.03em; line-height: 1.05; color: var(--ink); }
+.section-title em { font-style: italic; color: var(--brand-mid); }
+.section-sub { font-family: var(--font-body); font-size: 1rem; color: var(--ink-light); max-width: 520px; line-height: 1.7; margin-top: 14px; }
+
+/* ============ HERO ============ */
+/* TEMPLATE: Replace hero-bg background-image URL for each city */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 160px 48px 100px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: url('https://images.pexels.com/photos/33466033/pexels-photo-33466033.jpeg?auto=compress&cs=tinysrgb&w=1920');
+  background-size: cover; background-position: center;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 5, 15, 0.72) 0%,
+    rgba(5, 5, 15, 0.55) 50%,
+    rgba(5, 5, 15, 0.80) 100%
+  );
+}
+.hero-topbar {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 10;
+  background: linear-gradient(90deg, #1235CC, #1749FF, #4A6FFF, #1749FF, #1235CC);
+}
+.hero-content { position: relative; z-index: 2; }
+
+/* TEMPLATE: City breadcrumb text */
+.hero-breadcrumb {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); margin-bottom: 24px;
+}
+.hero-breadcrumb a { color: rgba(255,255,255,0.6); transition: color 0.3s; }
+.hero-breadcrumb a:hover { color: white; }
+.hero-breadcrumb .sep { opacity: 0.4; }
+
+.hero-price-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--brand); color: white;
+  padding: 9px 20px; border-radius: 100px;
+  font-family: var(--font-head); font-size: 0.78rem; font-weight: 800;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 24px rgba(23,73,255,0.5);
+  animation: badge-pulse 3s ease-in-out infinite;
+}
+@keyframes badge-pulse { 0%,100%{box-shadow:0 4px 24px rgba(23,73,255,0.5)} 50%{box-shadow:0 4px 40px rgba(23,73,255,0.75)} }
+.hero-price-badge .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: white; opacity: 0.5; }
+
+/* TEMPLATE: Update city name for each page */
+.hero h1 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(4rem, 12vw, 9rem);
+  line-height: 0.9; letter-spacing: -0.04em;
+  color: white; margin-bottom: 24px;
+  text-shadow: 0 4px 40px rgba(0,0,0,0.4);
+}
+.hero h1 span { color: var(--brand-light); }
+.hero-tagline {
+  font-family: var(--font-body); font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 400; color: rgba(255,255,255,0.82);
+  max-width: 560px; margin: 0 auto 40px; line-height: 1.6;
+}
+.hero-tagline strong { color: white; font-weight: 700; }
+
+.hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
+
+.hero-trust {
+  display: flex; align-items: center; justify-content: center; gap: 24px;
+  flex-wrap: wrap;
+}
+.hero-trust-item {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-body); font-size: 0.78rem; font-weight: 500;
+  color: rgba(255,255,255,0.6);
+}
+.hero-trust-item svg { width: 14px; height: 14px; color: var(--brand-light); flex-shrink: 0; }
+.hero-trust-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
+
+/* Floating stat badges */
+.hero-float {
+  position: absolute; z-index: 10;
+  background: rgba(255,255,255,0.95); border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 14px; padding: 12px 18px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  display: flex; align-items: center; gap: 10px;
+  white-space: nowrap; pointer-events: none;
+  backdrop-filter: blur(12px);
+}
+.hero-float-1 { top: 28%; right: 6%; animation: float-a 4.5s ease-in-out infinite; }
+.hero-float-2 { bottom: 22%; left: 5%; animation: float-b 5s ease-in-out infinite; }
+@keyframes float-a { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+@keyframes float-b { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+.float-icon { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.float-icon.gold { background: var(--brand-pale); }
+.float-icon.blue { background: var(--brand-pale); }
+.float-val { font-family: var(--font-head); font-weight: 800; font-size: 0.92rem; color: var(--ink); line-height: 1; }
+.float-lbl { font-family: var(--font-body); font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+@media (max-width: 900px) { .hero-float { display: none; } }
+
+/* ============ WHAT YOU GET (dark section) ============ */
+.whats-inside {
+  background: var(--ink-mid);
+  padding: 100px 48px;
+  position: relative; overflow: hidden;
+}
+.whats-inside::before {
+  content: '';
+  position: absolute; top: -1px; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--brand-mid), var(--brand), var(--brand-light), var(--brand), var(--brand-mid));
+}
+.wi-inner { max-width: 1120px; margin: 0 auto; }
+.wi-head { text-align: center; margin-bottom: 64px; }
+.wi-label { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.wi-label-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand-light); }
+.wi-label-text { font-family: var(--font-head); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--brand-light); }
+.wi-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 5vw, 3.8rem); letter-spacing: -0.04em; line-height: 1; color: white; margin-bottom: 16px; }
+.wi-title span { color: var(--brand-light); }
+.wi-sub { font-family: var(--font-body); font-size: 1.05rem; color: rgba(255,255,255,0.55); max-width: 520px; margin: 0 auto; line-height: 1.7; }
+.wi-price-callout {
+  display: inline-flex; align-items: center; gap: 16px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius); padding: 20px 32px;
+  margin: 32px auto 0; text-align: left;
+}
+.wi-price-old { font-family: var(--font-body); font-size: 0.82rem; color: rgba(255,255,255,0.35); text-decoration: line-through; }
+.wi-price-new { font-family: var(--font-display); font-weight: 900; font-size: 3rem; color: var(--brand-light); letter-spacing: -0.05em; line-height: 1; }
+.wi-price-detail { font-family: var(--font-body); font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 2px; }
+.wi-price-divider { width: 1px; height: 48px; background: rgba(255,255,255,0.12); }
+.wi-price-copy { font-family: var(--font-body); font-size: 0.88rem; color: rgba(255,255,255,0.6); max-width: 200px; line-height: 1.5; }
+
+.wi-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  margin-top: 0;
+}
+.wi-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius); padding: 32px 28px;
+  transition: all 0.3s var(--ease);
+  position: relative; overflow: hidden;
+}
+.wi-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--brand), var(--brand-light));
+  opacity: 0; transition: opacity 0.3s;
+}
+.wi-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-4px); border-color: rgba(255,255,255,0.14); }
+.wi-card:hover::before { opacity: 1; }
+.wi-icon { font-size: 2rem; margin-bottom: 18px; display: block; }
+.wi-card-title { font-family: var(--font-head); font-weight: 700; font-size: 1rem; color: white; margin-bottom: 10px; }
+.wi-card-desc { font-family: var(--font-body); font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
+.wi-card-tag {
+  display: inline-flex; margin-top: 18px;
+  padding: 4px 12px; border-radius: 100px;
+  font-family: var(--font-body); font-size: 0.67rem; font-weight: 700;
+  color: var(--brand-light); background: rgba(23,73,255,0.12);
+  border: 1px solid rgba(23,73,255,0.25); letter-spacing: 0.05em; text-transform: uppercase;
+}
+.wi-cta-wrap { text-align: center; margin-top: 52px; }
+.wi-guarantee {
+  margin-top: 16px;
+  font-family: var(--font-body); font-size: 0.8rem; color: rgba(255,255,255,0.35);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+
+/* ============ PHOTO GRID ============ */
+.photo-section { padding: 0; background: var(--ink); }
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  grid-template-rows: 300px 300px;
+  gap: 4px;
+}
+.photo-cell {
+  overflow: hidden; position: relative; cursor: pointer;
+}
+.photo-cell img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s var(--ease);
+  display: block;
+}
+.photo-cell:hover img { transform: scale(1.06); }
+.photo-cell-main { grid-row: 1 / 3; }
+.photo-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.photo-cell:hover .photo-overlay { opacity: 1; }
+.photo-label {
+  position: absolute; bottom: 16px; left: 16px;
+  font-family: var(--font-head); font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px; color: white;
+  opacity: 0; transform: translateY(6px);
+  transition: all 0.4s var(--ease);
+}
+.photo-cell:hover .photo-label { opacity: 1; transform: translateY(0); }
+
+/* ============ CITY SELL / WHY VEGAS ============ */
+.city-sell { padding: 100px 48px; background: var(--bg); }
+.cs-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.cs-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 44px; }
+.cs-stat {
+  background: var(--bg-mid); border: 1px solid var(--bg-dark);
+  border-radius: var(--radius-sm); padding: 24px 20px;
+  transition: all 0.3s var(--ease);
+}
+.cs-stat:hover { background: var(--brand-pale); border-color: var(--brand-light); transform: translateY(-2px); }
+.cs-stat-num { font-family: var(--font-display); font-size: 2.4rem; font-weight: 800; color: var(--brand); letter-spacing: -0.05em; line-height: 1; }
+.cs-stat-label { font-family: var(--font-body); font-size: 0.8rem; color: var(--ink-light); margin-top: 4px; }
+.cs-features { display: flex; flex-direction: column; gap: 20px; }
+.cs-feature { display: flex; align-items: flex-start; gap: 16px; }
+.cs-feature-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--brand-pale); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.cs-feature-title { font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.cs-feature-desc { font-family: var(--font-body); font-size: 0.88rem; color: var(--ink-light); line-height: 1.6; }
+
+/* ============ WHAT'S INCLUDED PREVIEW ============ */
+.included-section { padding: 100px 48px; background: var(--bg-mid); }
+.inc-inner { max-width: 1120px; margin: 0 auto; }
+.inc-head { text-align: center; margin-bottom: 60px; }
+.inc-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 48px; }
+.inc-tab {
+  padding: 18px 16px; border-radius: var(--radius-sm); text-align: center;
+  border: 1.5px solid var(--bg-dark); background: white; cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+.inc-tab.active { background: var(--brand); border-color: var(--brand); }
+.inc-tab.active .inc-tab-icon,
+.inc-tab.active .inc-tab-label { color: white; }
+.inc-tab:hover:not(.active) { border-color: var(--brand-light); background: var(--brand-pale); transform: translateY(-2px); }
+.inc-tab-icon { font-size: 1.6rem; display: block; margin-bottom: 8px; }
+.inc-tab-label { font-family: var(--font-head); font-size: 0.78rem; font-weight: 700; color: var(--ink); }
+
+.inc-panels { }
+.inc-panel { display: none; }
+.inc-panel.active { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.inc-card {
+  background: white; border: 1px solid var(--bg-dark); border-radius: var(--radius);
+  padding: 28px 24px; transition: all 0.3s var(--ease);
+  position: relative; overflow: hidden;
+}
+.inc-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.inc-card-tier {
+  display: inline-flex; padding: 3px 10px; border-radius: 100px;
+  font-family: var(--font-body); font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  margin-bottom: 14px;
+}
+.tier-budget { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.tier-mid { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.tier-luxury { background: #faf5ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+.inc-card-name { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.inc-card-desc { font-family: var(--font-body); font-size: 0.85rem; color: var(--ink-light); line-height: 1.6; margin-bottom: 14px; }
+.inc-card-detail { font-family: var(--font-body); font-size: 0.78rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.inc-card-detail::before { content: '→'; color: var(--brand); font-weight: 700; }
+.inc-lock {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.75); backdrop-filter: blur(4px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  border-radius: var(--radius);
+}
+.inc-lock-icon { font-size: 1.8rem; }
+.inc-lock-text { font-family: var(--font-head); font-size: 0.82rem; font-weight: 700; color: var(--ink-light); text-align: center; padding: 0 20px; }
+.inc-lock-cta {
+  background: var(--brand); color: white;
+  padding: 10px 22px; border-radius: 100px;
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 700;
+  cursor: pointer; transition: all 0.3s var(--ease); border: none;
+}
+.inc-lock-cta:hover { background: var(--brand-mid); transform: translateY(-1px); }
+
+/* ============ EXCLUSIVE DEALS / VALUE PROP ============ */
+.value-section { padding: 100px 48px; background: var(--brand); }
+.val-inner { max-width: 1120px; margin: 0 auto; }
+.val-head { margin-bottom: 56px; }
+.val-head .label-text { color: rgba(255,255,255,0.6); }
+.val-head .section-title { color: white; }
+.val-head .section-sub { color: rgba(255,255,255,0.65); }
+.val-compare {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; align-items: start;
+  margin-bottom: 60px;
+}
+.val-col { }
+.val-col-head {
+  padding: 16px 20px; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  font-family: var(--font-head); font-size: 0.8rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px; text-align: center;
+}
+.val-col-head.them { background: rgba(0,0,0,0.2); color: rgba(255,255,255,0.5); }
+.val-col-head.us { background: white; color: var(--brand); }
+.val-col-body { padding: 24px 20px; border-radius: 0 0 var(--radius-sm) var(--radius-sm); }
+.val-col-body.them { background: rgba(0,0,0,0.15); }
+.val-col-body.us { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); }
+.val-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.val-item:last-child { border-bottom: none; }
+.val-check { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; flex-shrink: 0; }
+.val-check.bad  { background: rgba(239,68,68,0.2); color: #fca5a5; }
+.val-check.good { background: rgba(255,255,255,0.2); color: white; }
+.val-item-text { font-family: var(--font-body); font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.4; }
+.val-vs {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 1.4rem; font-weight: 900;
+  color: rgba(255,255,255,0.25); padding-top: 56px;
+}
+.val-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.val-bottom-card {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius); padding: 28px 24px;
+  text-align: center;
+}
+.val-bottom-icon { font-size: 2rem; margin-bottom: 12px; }
+.val-bottom-title { font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: white; margin-bottom: 8px; }
+.val-bottom-desc { font-family: var(--font-body); font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+/* ============ TESTIMONIALS ============ */
+.testimonials { padding: 100px 48px; background: var(--bg); }
+.test-inner { max-width: 1120px; margin: 0 auto; }
+.test-head { margin-bottom: 52px; }
+.test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.test-card {
+  background: white; border: 1px solid var(--bg-dark); border-radius: var(--radius);
+  padding: 32px 28px; box-shadow: var(--shadow); transition: all 0.3s var(--ease);
+}
+.test-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.test-stars { display: flex; gap: 3px; margin-bottom: 18px; }
+.test-stars span { font-size: 0.9rem; }
+.test-quote { font-family: var(--font-body); font-size: 0.95rem; color: var(--ink-light); line-height: 1.7; font-style: italic; margin-bottom: 24px; }
+.test-quote::before { content: '"'; }
+.test-quote::after { content: '"'; }
+.test-author { display: flex; align-items: center; gap: 12px; }
+.test-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--brand-pale); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 0.9rem; color: var(--brand); flex-shrink: 0; }
+.test-name { font-family: var(--font-head); font-size: 0.85rem; font-weight: 700; color: var(--ink); line-height: 1.1; }
+.test-handle { font-family: var(--font-body); font-size: 0.75rem; color: var(--muted); }
+
+/* ============ FAQ ============ */
+.faq-section { padding: 100px 48px; background: var(--bg-mid); }
+.faq-inner { max-width: 760px; margin: 0 auto; }
+.faq-head { text-align: center; margin-bottom: 52px; }
+.faq-list { display: flex; flex-direction: column; gap: 12px; }
+.faq-item { background: white; border: 1px solid var(--bg-dark); border-radius: var(--radius-sm); overflow: hidden; }
+.faq-q {
+  padding: 22px 28px; display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; font-family: var(--font-head); font-size: 0.95rem; font-weight: 700;
+  color: var(--ink); transition: background 0.25s;
+  gap: 16px;
+}
+.faq-q:hover { background: var(--bg-mid); }
+.faq-q.open { background: var(--brand); color: white; }
+.faq-chevron { width: 20px; height: 20px; flex-shrink: 0; transition: transform 0.3s var(--ease); }
+.faq-q.open .faq-chevron { transform: rotate(180deg); }
+.faq-a {
+  padding: 0 28px; max-height: 0; overflow: hidden;
+  font-family: var(--font-body); font-size: 0.92rem; color: var(--ink-light); line-height: 1.75;
+  transition: max-height 0.4s var(--ease), padding 0.3s ease;
+}
+.faq-a.open { max-height: 300px; padding: 20px 28px; border-top: 1px solid var(--bg-dark); }
+
+/* ============ BOTTOM CTA ============ */
+.bottom-cta {
+  padding: 100px 48px;
+  background: var(--ink);
+  text-align: center; position: relative; overflow: hidden;
+}
+.bottom-cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 0%, rgba(23,73,255,0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(74,111,255,0.12) 0%, transparent 70%);
+}
+.bc-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+.bc-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 18px; border-radius: 100px;
+  border: 1px solid rgba(74,111,255,0.4); background: rgba(23,73,255,0.15);
+  font-family: var(--font-body); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-light);
+  margin-bottom: 28px;
+}
+.bc-title { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.6rem, 6vw, 4.5rem); letter-spacing: -0.04em; line-height: 1; color: white; margin-bottom: 20px; }
+.bc-title span { color: var(--brand-light); }
+.bc-sub { font-family: var(--font-body); font-size: 1.05rem; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 48px; max-width: 520px; margin-left: auto; margin-right: auto; }
+.bc-ctas { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.bc-cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.bc-divider { font-family: var(--font-body); font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+.bc-or { display: flex; align-items: center; gap: 16px; width: 100%; max-width: 300px; }
+.bc-or::before, .bc-or::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
+.bc-or-text { font-family: var(--font-body); font-size: 0.78rem; color: rgba(255,255,255,0.3); white-space: nowrap; }
+.bc-alt {
+  font-family: var(--font-body); font-size: 0.88rem; color: rgba(255,255,255,0.45);
+}
+.bc-alt a { color: rgba(255,255,255,0.65); text-decoration: underline; text-underline-offset: 3px; transition: color 0.3s; }
+.bc-alt a:hover { color: white; }
+.bc-guarantee-row { display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 36px; flex-wrap: wrap; }
+.bc-guarantee-item { display: flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+.bc-guarantee-item .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+
+/* ============ NATE PROFILE STRIP ============ */
+.nate-strip {
+  padding: 64px 48px;
+  background: var(--bg);
+  border-top: 1px solid var(--bg-dark); border-bottom: 1px solid var(--bg-dark);
+}
+.nate-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 48px; }
+.nate-avatar { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.25); box-shadow: 0 0 0 3px var(--brand); }
+.nate-content { flex: 1; }
+.nate-name { font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
+.nate-role { font-family: var(--font-body); font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 12px; }
+.nate-bio { font-family: var(--font-body); font-size: 0.92rem; color: var(--ink-light); line-height: 1.7; }
+.nate-cta-wrap { flex-shrink: 0; }
+
+/* ============ FOOTER ============ */
+footer { background: var(--ink-mid); color: white; padding: 64px 48px 20px; }
+footer .footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 48px; max-width: 1400px; margin-left: auto; margin-right: auto;
+}
+.footer-brand {}
+.footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.footer-logo img { height: 36px; width: auto; display: block; }
+.footer-tagline { font-family: var(--font-body); font-size: 0.85rem; color: rgba(255,255,255,0.5); max-width: 280px; line-height: 1.7; }
+.footer-links-col h4 { font-family: var(--font-head); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+.footer-links-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-links-col a { font-family: var(--font-body); font-size: 0.88rem; color: rgba(255,255,255,0.65); transition: color 0.3s; text-decoration: none; }
+.footer-links-col a:hover { color: white; }
+footer .footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 16px 0; text-align: center;
+  max-width: 1400px; margin: 0 auto;
+  font-family: var(--font-body); font-size: 0.78rem; color: rgba(255,255,255,0.3);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .wi-grid { grid-template-columns: repeat(2, 1fr); }
+  .inc-panel.active { grid-template-columns: repeat(2, 1fr); }
+  .val-compare { grid-template-columns: 1fr; gap: 0; }
+  .val-vs { display: none; }
+  .val-col-head.them, .val-col-body.them { display: none; }
+  footer .footer-top { grid-template-columns: 1fr 1fr; }
+  .cs-inner { grid-template-columns: 1fr; gap: 52px; }
+  .nate-inner { flex-direction: column; text-align: center; }
+  .nate-cta-wrap { width: 100%; text-align: center; }
+}
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  nav.scrolled { padding: 12px 24px; }
+  .nav-links, .nav-right .nav-cta:not(.hamburger) { display: none; }
+  .hamburger { display: flex; }
+  .hero { padding: 120px 24px 80px; }
+  .hero h1 { font-size: clamp(3rem, 16vw, 5rem); }
+  .whats-inside, .city-sell, .included-section, .value-section, .faq-section, .bottom-cta, .nate-strip { padding: 72px 24px; }
+  .wi-grid { grid-template-columns: 1fr; }
+  .inc-tabs { grid-template-columns: repeat(2, 1fr); }
+  .inc-panel.active { grid-template-columns: 1fr; }
+  .photo-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .photo-cell-main { grid-row: 1; grid-column: 1 / 3; height: 280px; }
+  .photo-cell { height: 180px; }
+  .cs-stats { grid-template-columns: 1fr 1fr; }
+  .val-bottom { grid-template-columns: 1fr; }
+  footer .footer-top { grid-template-columns: 1fr; }
+  .bc-cta-row { flex-direction: column; align-items: center; }
+  .wi-price-callout { flex-direction: column; text-align: center; }
+  .wi-price-divider { width: 60px; height: 1px; }
+}
+
+/* ============ ANIMATIONS ============ */
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+.fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up-delay-1 { transition-delay: 0.1s; }
+.fade-up-delay-2 { transition-delay: 0.2s; }
+.fade-up-delay-3 { transition-delay: 0.3s; }
+.fade-up-delay-4 { transition-delay: 0.4s; }
+.fade-up-delay-5 { transition-delay: 0.5s; }
+
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="main-nav">
+  <a href="../index.html" class="nav-logo">
+    <img src="../assets/weekndr-logo-white.png" alt="Weekndr">
+    <div class="nav-logo-text">
+      <span class="nav-logo-name">Nathan Lane</span>
+      <span class="nav-logo-sub">Travel Agent</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../destinations.html">Destinations</a></li>
+    <li><a href="../services.html">Services</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#get-guide" class="nav-cta">Book This Trip — $9.99</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobile-nav">
+  <a href="../index.html">Home</a>
+  <a href="../destinations.html">Destinations</a>
+  <a href="../services.html">Services</a>
+  <a href="#get-guide" class="mobile-cta">Book This Trip — $9.99</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<!-- TEMPLATE: Update city name, tagline, and hero-bg image URL below -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-topbar"></div>
+
+  <!-- Floating badges -->
+  <div class="hero-float hero-float-1">
+    <div class="float-icon gold">🎰</div>
+    <div>
+      <div class="float-val">$9.99</div>
+      <div class="float-lbl">Full Trip Guide</div>
+    </div>
+  </div>
+  <div class="hero-float hero-float-2">
+    <div class="float-icon blue">⭐</div>
+    <div>
+      <div class="float-val">Insider Picks</div>
+      <div class="float-lbl">Restaurants + Hotels</div>
+    </div>
+  </div>
+
+  <div class="hero-content">
+
+    <div class="hero-price-badge">
+      <span class="badge-dot"></span>
+      Pre-Planned Vegas Vacation · $9.99
+      <span class="badge-dot"></span>
+    </div>
+
+    <!-- TEMPLATE: Change city name here -->
+    <h1>Las Vegas</h1>
+
+    <!-- TEMPLATE: Update tagline for each city -->
+    <p class="hero-tagline">
+      Your Vegas trip is <strong>already planned.</strong> Hotels picked, restaurants chosen, activities mapped, tips locked in. Pay $9.99, book everything yourself using our exclusive links.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#get-guide" class="btn btn-primary btn-lg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Get the Trip Plan — $9.99
+      </a>
+      <a href="../index.html#contact" class="btn btn-outline btn-lg">
+        Have Nate Book It for Me
+      </a>
+    </div>
+
+    <div class="hero-trust">
+      <div class="hero-trust-item">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Curated by a real travel agent
+      </div>
+      <span class="hero-trust-sep"></span>
+      <div class="hero-trust-item">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Exclusive affiliate deals included
+      </div>
+      <span class="hero-trust-sep"></span>
+      <div class="hero-trust-item">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        One-time purchase, yours forever
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHAT'S INSIDE ─── -->
+<section class="whats-inside" id="get-guide">
+  <div class="wi-inner">
+    <div class="wi-head fade-up">
+      <div class="wi-label"><span class="wi-label-dot"></span><span class="wi-label-text">The Weekndr Guide</span></div>
+      <!-- TEMPLATE: Update city name -->
+      <h2 class="wi-title">Your Vegas trip.<br><span>Pre-planned. Ready to book.</span></h2>
+      <p class="wi-sub">The hotels are picked. The restaurants are chosen. The itinerary is mapped out. Pay $9.99, get everything, and book it all yourself using our exclusive links — at better prices than you'd find on your own.</p>
+      <div class="wi-price-callout">
+        <div>
+          <div class="wi-price-old">8–12 hours of research: $0 but you'll never get it back</div>
+          <div class="wi-price-new">$9.99</div>
+          <div class="wi-price-detail">One-time · Instant access · Book on your timeline</div>
+        </div>
+        <div class="wi-price-divider"></div>
+        <div class="wi-price-copy">Skip the research entirely. Every pick and link is ready to book — at rates you won't find on Expedia.</div>
+      </div>
+    </div>
+
+    <div class="wi-grid">
+      <div class="wi-card fade-up">
+        <span class="wi-icon">🏨</span>
+        <div class="wi-card-title">Hotel Picks at Every Budget</div>
+        <div class="wi-card-desc">We've picked the hotels at every price point — budget, mid-range, and luxury. All on or near the Strip, all vetted. You just click the link and book.</div>
+        <span class="wi-card-tag">Budget · Mid · Luxury</span>
+      </div>
+      <div class="wi-card fade-up fade-up-delay-1">
+        <span class="wi-icon">🍽️</span>
+        <div class="wi-card-title">Restaurant Recommendations</div>
+        <div class="wi-card-desc">Already selected for every meal of the trip — breakfast, lunch, dinner, late-night. The celebrity spots worth the splurge and the local finds tourists never see.</div>
+        <span class="wi-card-tag">30+ Picks Included</span>
+      </div>
+      <div class="wi-card fade-up fade-up-delay-2">
+        <span class="wi-icon">🎭</span>
+        <div class="wi-card-title">Activities & Entertainment</div>
+        <div class="wi-card-desc">Shows, pool days, nightlife, day trips — all selected and sequenced for you. A real day-by-day schedule you can follow or adapt. No figuring it out as you go.</div>
+        <span class="wi-card-tag">Day-by-Day Itinerary</span>
+      </div>
+      <div class="wi-card fade-up fade-up-delay-3">
+        <span class="wi-icon">💡</span>
+        <div class="wi-card-title">Pro Tips & Insider Tricks</div>
+        <div class="wi-card-desc">Room upgrade tricks, line skips, hidden fees to avoid, when to book — the insider knowledge that comes with booking hundreds of Vegas trips included alongside every pick.</div>
+        <span class="wi-card-tag">20+ Insider Tips</span>
+      </div>
+      <div class="wi-card fade-up fade-up-delay-4">
+        <span class="wi-icon">💰</span>
+        <div class="wi-card-title">Exclusive Booking Deals</div>
+        <div class="wi-card-desc">Every booking link in the plan is an affiliate link with negotiated perks — better rates, room upgrades, and free amenities you won't find on Expedia or Google.</div>
+        <span class="wi-card-tag">Exclusive Rates Inside</span>
+      </div>
+      <div class="wi-card fade-up fade-up-delay-5">
+        <span class="wi-icon">🗺️</span>
+        <div class="wi-card-title">Full Weekend Itinerary</div>
+        <div class="wi-card-desc">A complete day-by-day schedule for a 3-day Vegas weekend. Everything is in order — just show up, follow the plan, and actually enjoy the trip.</div>
+        <span class="wi-card-tag">3-Day Plan Included</span>
+      </div>
+    </div>
+
+    <div class="wi-cta-wrap fade-up">
+      <a href="#" class="btn btn-primary btn-lg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <!-- TEMPLATE: Update city name -->
+        Get the Vegas Trip Plan — $9.99
+      </a>
+      <div class="wi-guarantee">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;color:var(--brand-light)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Instant digital delivery · One-time purchase · Yours to keep forever
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PHOTO GRID ─── -->
+<!-- TEMPLATE: Replace photo URLs for each city -->
+<div class="photo-section">
+  <div class="photo-grid">
+    <div class="photo-cell photo-cell-main">
+      <img src="https://images.pexels.com/photos/161772/las-vegas-nevada-cities-urban-161772.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Las Vegas Strip at night" loading="lazy">
+      <div class="photo-overlay"></div>
+      <div class="photo-label">The Strip</div>
+    </div>
+    <div class="photo-cell">
+      <img src="https://images.pexels.com/photos/28860864/pexels-photo-28860864.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Casino Royale neon sign at night" loading="lazy">
+      <div class="photo-overlay"></div>
+      <div class="photo-label">Neon Nights</div>
+    </div>
+    <div class="photo-cell">
+      <img src="https://images.pexels.com/photos/30135757/pexels-photo-30135757.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Welcome to Las Vegas sign" loading="lazy">
+      <div class="photo-overlay"></div>
+      <div class="photo-label">Iconic Vegas</div>
+    </div>
+    <div class="photo-cell">
+      <img src="https://images.pexels.com/photos/33431233/pexels-photo-33431233.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Aerial view of Bellagio Hotel" loading="lazy">
+      <div class="photo-overlay"></div>
+      <div class="photo-label">The Bellagio</div>
+    </div>
+    <div class="photo-cell">
+      <img src="https://images.pexels.com/photos/33466033/pexels-photo-33466033.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Las Vegas Boulevard at night" loading="lazy">
+      <div class="photo-overlay"></div>
+      <div class="photo-label">The Boulevard</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CITY SELL / WHY VEGAS ─── -->
+<section class="city-sell">
+  <div class="cs-inner">
+    <div class="fade-up">
+      <div class="section-label">
+        <div class="label-line"></div>
+        <!-- TEMPLATE: Update city label -->
+        <span class="label-text">Why Las Vegas</span>
+      </div>
+      <!-- TEMPLATE: Update heading and copy for each city -->
+      <h2 class="section-title">There's a reason everyone comes back <em>again and again.</em></h2>
+      <p class="section-sub" style="margin-bottom:0;">Vegas isn't just a city — it's an experience that's impossible to fully understand until you're in the middle of it. The energy at 2am on the Strip, the insane restaurant scene, pools that feel like resorts within resorts. There's nothing else like it.</p>
+      <div class="cs-stats">
+        <div class="cs-stat fade-up">
+          <div class="cs-stat-num">30M+</div>
+          <div class="cs-stat-label">Visitors a year</div>
+        </div>
+        <div class="cs-stat fade-up fade-up-delay-1">
+          <div class="cs-stat-num">200+</div>
+          <div class="cs-stat-label">Celebrity restaurants</div>
+        </div>
+        <div class="cs-stat fade-up fade-up-delay-2">
+          <div class="cs-stat-num">24/7</div>
+          <div class="cs-stat-label">City that never sleeps</div>
+        </div>
+        <div class="cs-stat fade-up fade-up-delay-3">
+          <div class="cs-stat-num">$65</div>
+          <div class="cs-stat-label">Avg resort fee/night you can avoid knowing the right hotels</div>
+        </div>
+      </div>
+    </div>
+    <div class="cs-features fade-up fade-up-delay-1">
+      <!-- TEMPLATE: Update features for each city's highlights -->
+      <div class="cs-feature">
+        <div class="cs-feature-icon">🎰</div>
+        <div>
+          <div class="cs-feature-title">Iconic Casino Culture</div>
+          <div class="cs-feature-desc">From $5 blackjack tables to high-roller rooms, Vegas gaming is an experience unto itself. Our guide tells you exactly which casinos to hit and when.</div>
+        </div>
+      </div>
+      <div class="cs-feature">
+        <div class="cs-feature-icon">🍣</div>
+        <div>
+          <div class="cs-feature-title">World-Class Dining</div>
+          <div class="cs-feature-desc">Joël Robuchon. Nobu. Gordon Ramsay. Wicked Spoon. The dining scene here rivals any city in the world — you just have to know where to go.</div>
+        </div>
+      </div>
+      <div class="cs-feature">
+        <div class="cs-feature-icon">🏊</div>
+        <div>
+          <div class="cs-feature-title">Epic Pool Scenes</div>
+          <div class="cs-feature-desc">Wet Republic. Encore Beach Club. Drai's. The Vegas pool experience is its own whole thing. We'll tell you which ones are worth it and how to get in.</div>
+        </div>
+      </div>
+      <div class="cs-feature">
+        <div class="cs-feature-icon">🎤</div>
+        <div>
+          <div class="cs-feature-title">Shows & Residencies</div>
+          <div class="cs-feature-desc">Vegas has the best entertainment on earth — from Sphere to Cirque du Soleil to major music residencies. We'll help you pick what's actually worth seeing.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHAT'S INCLUDED PREVIEW ─── -->
+<section class="included-section">
+  <div class="inc-inner">
+    <div class="inc-head fade-up">
+      <div class="section-label" style="justify-content:center;">
+        <div class="label-line"></div>
+        <span class="label-text">Inside the Guide</span>
+        <div class="label-line"></div>
+      </div>
+      <h2 class="section-title">A sneak peek at what's waiting for you.</h2>
+      <p class="section-sub" style="margin: 14px auto 0;">Unlock the full guide for $9.99. Here's a preview of the categories — the actual recommendations are inside.</p>
+    </div>
+
+    <div class="inc-tabs">
+      <div class="inc-tab active" onclick="showPanel('hotels', this)">
+        <span class="inc-tab-icon">🏨</span>
+        <span class="inc-tab-label">Hotels</span>
+      </div>
+      <div class="inc-tab" onclick="showPanel('restaurants', this)">
+        <span class="inc-tab-icon">🍽️</span>
+        <span class="inc-tab-label">Restaurants</span>
+      </div>
+      <div class="inc-tab" onclick="showPanel('activities', this)">
+        <span class="inc-tab-icon">🎭</span>
+        <span class="inc-tab-label">Activities</span>
+      </div>
+      <div class="inc-tab" onclick="showPanel('tips', this)">
+        <span class="inc-tab-icon">💡</span>
+        <span class="inc-tab-label">Pro Tips</span>
+      </div>
+    </div>
+
+    <div class="inc-panels">
+      <!-- HOTELS PANEL -->
+      <!-- TEMPLATE: Update hotel names for each city -->
+      <div class="inc-panel active" id="panel-hotels">
+        <div class="inc-card">
+          <span class="inc-card-tier tier-budget">Budget Pick</span>
+          <div class="inc-card-name">The LINQ Hotel</div>
+          <div class="inc-card-desc">Center-Strip location without center-Strip prices. Great pool, easy access to everything — and it's way more fun than you'd expect.</div>
+          <div class="inc-card-detail">~$80–130/night · Strip location</div>
+        </div>
+        <div class="inc-card">
+          <span class="inc-card-tier tier-mid">Mid-Range Pick</span>
+          <div class="inc-card-name">Resorts World Las Vegas</div>
+          <div class="inc-card-desc">The newest mega-resort on the Strip. Incredible amenities, multiple pools, and enough dining options to never leave — but the Strip is right there too.</div>
+          <div class="inc-card-detail">~$160–250/night · North Strip</div>
+        </div>
+        <div class="inc-card" style="position:relative;">
+          <span class="inc-card-tier tier-luxury">Luxury Pick</span>
+          <div class="inc-card-name">Wynn Las Vegas</div>
+          <div class="inc-card-desc">The undisputed king of Vegas luxury. The pool situation alone is worth it. Everything here is dialed — service, rooms, food, casino floor.</div>
+          <div class="inc-card-detail">~$350+/night · Mid Strip</div>
+          <div class="inc-lock">
+            <div class="inc-lock-icon">🔒</div>
+            <div class="inc-lock-text">+ 5 more hotel picks + exclusive booking links inside the guide</div>
+            <button class="inc-lock-cta" onclick="document.getElementById('get-guide').scrollIntoView({behavior:'smooth'})">Unlock for $9.99</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESTAURANTS PANEL -->
+      <!-- TEMPLATE: Update restaurant names for each city -->
+      <div class="inc-panel" id="panel-restaurants">
+        <div class="inc-card">
+          <span class="inc-card-tier tier-budget">Best Value</span>
+          <div class="inc-card-name">Wicked Spoon</div>
+          <div class="inc-card-desc">The best buffet in Vegas and it's not close. Elevated, fresh, chef-driven — nothing like the old-school Vegas buffet you're imagining.</div>
+          <div class="inc-card-detail">~$45/person · The Cosmopolitan</div>
+        </div>
+        <div class="inc-card">
+          <span class="inc-card-tier tier-mid">Dinner Pick</span>
+          <div class="inc-card-name">Nobu at Caesars</div>
+          <div class="inc-card-desc">World-famous Japanese fusion. The black cod with miso is non-negotiable. Make reservations, dress up a little, and just trust the menu.</div>
+          <div class="inc-card-detail">~$80–120/person · Caesars Palace</div>
+        </div>
+        <div class="inc-card" style="position:relative;">
+          <span class="inc-card-tier tier-luxury">Splurge Pick</span>
+          <div class="inc-card-name">é by José Andrés</div>
+          <div class="inc-card-desc">8-seat avant-garde tasting experience hidden inside Jaleo. One of the most extraordinary dining experiences in the entire country. Book early.</div>
+          <div class="inc-card-detail">~$300/person · Cosmopolitan</div>
+          <div class="inc-lock">
+            <div class="inc-lock-icon">🔒</div>
+            <div class="inc-lock-text">+ 25 more restaurant picks by meal type inside the guide</div>
+            <button class="inc-lock-cta" onclick="document.getElementById('get-guide').scrollIntoView({behavior:'smooth'})">Unlock for $9.99</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVITIES PANEL -->
+      <!-- TEMPLATE: Update activities for each city -->
+      <div class="inc-panel" id="panel-activities">
+        <div class="inc-card">
+          <span class="inc-card-tier tier-budget">Free / Cheap</span>
+          <div class="inc-card-name">Bellagio Fountains</div>
+          <div class="inc-card-desc">Cliché? Sure. Still somehow breathtaking every time? Absolutely. Go at night, stand directly across the street, and just watch. It's free.</div>
+          <div class="inc-card-detail">Free · Bellagio · Every 15–30 min</div>
+        </div>
+        <div class="inc-card">
+          <span class="inc-card-tier tier-mid">Must-Do Experience</span>
+          <div class="inc-card-name">MSG Sphere</div>
+          <div class="inc-card-desc">There's nothing else like it in the world. Whatever's playing when you visit — go. The experience of being inside the Sphere is the show.</div>
+          <div class="inc-card-detail">~$60–175 · East of Strip</div>
+        </div>
+        <div class="inc-card" style="position:relative;">
+          <span class="inc-card-tier tier-luxury">Splurge Activity</span>
+          <div class="inc-card-name">Grand Canyon Helicopter Tour</div>
+          <div class="inc-card-desc">40 minutes outside Vegas and you're at one of the seven natural wonders of the world. The helicopter tours over the rim are absolutely worth the money.</div>
+          <div class="inc-card-detail">~$350–600 · Day trip from Vegas</div>
+          <div class="inc-lock">
+            <div class="inc-lock-icon">🔒</div>
+            <div class="inc-lock-text">+ Day-by-day itinerary + 20 more activities inside the guide</div>
+            <button class="inc-lock-cta" onclick="document.getElementById('get-guide').scrollIntoView({behavior:'smooth'})">Unlock for $9.99</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIPS PANEL -->
+      <div class="inc-panel" id="panel-tips">
+        <div class="inc-card">
+          <span class="inc-card-tier tier-budget">Money Tip</span>
+          <div class="inc-card-name">Never Pay Resort Fees on Certain Hotels</div>
+          <div class="inc-card-desc">Several Strip-adjacent hotels have zero resort fees and are just as good. We tell you exactly which ones — and it can save you $100+ per trip.</div>
+          <div class="inc-card-detail">Included in the guide</div>
+        </div>
+        <div class="inc-card">
+          <span class="inc-card-tier tier-mid">Dining Trick</span>
+          <div class="inc-card-name">The Reservation Hack</div>
+          <div class="inc-card-desc">Vegas restaurant reservations look impossible, but there are specific windows and tactics we use to get into booked-out spots. Works every time.</div>
+          <div class="inc-card-detail">Included in the guide</div>
+        </div>
+        <div class="inc-card" style="position:relative;">
+          <span class="inc-card-tier tier-luxury">VIP Tip</span>
+          <div class="inc-card-name">How to Get a Room Upgrade</div>
+          <div class="inc-card-desc">A specific phrasing and timing technique that works at most Strip hotels — not a guarantee, but we've had a near-100% success rate using it.</div>
+          <div class="inc-card-detail">Included in the guide</div>
+          <div class="inc-lock">
+            <div class="inc-lock-icon">🔒</div>
+            <div class="inc-lock-text">+ 18 more pro tips to travel like a local inside</div>
+            <button class="inc-lock-cta" onclick="document.getElementById('get-guide').scrollIntoView({behavior:'smooth'})">Unlock for $9.99</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── VALUE PROPOSITION ─── -->
+<section class="value-section">
+  <div class="val-inner">
+    <div class="val-head fade-up">
+      <div class="section-label">
+        <div class="label-line" style="background:rgba(255,255,255,0.3)"></div>
+        <span class="label-text">Why Our Guide</span>
+      </div>
+      <h2 class="section-title">Stop leaving your trip to chance.</h2>
+      <p class="section-sub">Booking Vegas on your own means overpriced hotels, tourist-trap restaurants, and $80 resort fees you didn't know about. Our guide eliminates all of that.</p>
+    </div>
+
+    <div class="val-compare">
+      <div class="val-col fade-up">
+        <div class="val-col-head them">Booking It Yourself</div>
+        <div class="val-col-body them">
+          <div class="val-item">
+            <span class="val-check bad">✕</span>
+            <span class="val-item-text">Hours of research across 12 different tabs</span>
+          </div>
+          <div class="val-item">
+            <span class="val-check bad">✕</span>
+            <span class="val-item-text">Paying retail prices on hotels with no perks</span>
+          </div>
+          <div class="val-item">
+            <span class="val-check bad">✕</span>
+            <span class="val-item-text">Getting recommended tourist trap restaurants</span>
+          </div>
+          <div class="val-item">
+            <span class="val-check bad">✕</span>
+            <span class="val-item-text">Hidden resort fees you didn't know about</span>
+          </div>
+          <div class="val-item">
+            <span class="val-check bad">✕</span>
+            <span class="val-item-text">No insider tips, tricks, or locals knowledge</span>
+          </div>
+          <div class="val-item">
+            <span class="val-check bad">✕</span>
+            <span class="val-item-text">Figuring it out as you go, stressing on arrival</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="val-vs">VS</div>
+
+      <div class="val-col fade-up fade-up-delay-2">
+        <div class="val-col-head us">With the Weekndr Guide</div>
+        <div class="val-col-body us">
+          <div class="val-item">
+            <span class="val-check good">✓</span>
+            <span class="val-item-text">Everything researched and curated for you</span>
+          </div>
+          <div class="val-item">
+            <span class="val-check good">✓</span>
+            <span class="val-item-text">Affiliate links with exclusive rates + perks</span>
+          </div>
+          <div class="val-item">
+            <span class="val-check good">✓</span>
+            <span class="val-item-text">Real restaurants where locals and foodies go</span>
+          </div>
+          <div class="val-item">
+            <span class="val-check good">✓</span>
+            <span class="val-item-text">Hotels with low/no resort fees highlighted</span>
+          </div>
+          <div class="val-item">
+            <span class="val-check good">✓</span>
+            <span class="val-item-text">20+ pro tips to travel like you've done it 100x</span>
+          </div>
+          <div class="val-item">
+            <span class="val-check good">✓</span>
+            <span class="val-item-text">Arrive confident with a full plan already set</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="val-bottom fade-up">
+      <div class="val-bottom-card">
+        <div class="val-bottom-icon">💸</div>
+        <div class="val-bottom-title">The Guide Pays for Itself</div>
+        <div class="val-bottom-desc">Our affiliate hotel links often unlock rates cheaper than what you'd find on Expedia or Google — one booking and you've already saved more than $9.99.</div>
+      </div>
+      <div class="val-bottom-card">
+        <div class="val-bottom-icon">⏱️</div>
+        <div class="val-bottom-title">Save 8+ Hours of Research</div>
+        <div class="val-bottom-desc">The average person spends 8–12 hours planning a Vegas trip online. This guide collapses that into 20 minutes of reading and you're done.</div>
+      </div>
+      <div class="val-bottom-card">
+        <div class="val-bottom-icon">🎯</div>
+        <div class="val-bottom-title">Made by Someone Who Actually Goes</div>
+        <div class="val-bottom-desc">This isn't scraped from TripAdvisor. Nate is a Las Vegas-based travel agent who's helped hundreds of people book Vegas trips — this is the real knowledge.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NATE STRIP ─── -->
+<div class="nate-strip">
+  <div class="nate-inner">
+    <div class="nate-avatar"><img src="../assets/Nathan .png" alt="Nathan Lane" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%;"></div>
+    <div class="nate-content">
+      <div class="nate-name">Nathan Lane</div>
+      <div class="nate-role">Las Vegas-Based Travel Agent · Weekndr</div>
+      <div class="nate-bio">I'm a Las Vegas-based independent travel agent and this city is my backyard. I built these pre-planned trips because I was tired of watching people waste money on bad hotels and tourist-trap restaurants when the real Vegas is right there. For $9.99, you get everything I'd tell a friend who asked me to plan their trip — minus me doing the actual booking for you. If you want that too, I offer full-service custom trip planning where I handle every single booking for you.</div>
+    </div>
+    <div class="nate-cta-wrap">
+      <a href="../index.html#contact" class="btn btn-primary">Book with Nate</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── FAQ ─── -->
+<section class="faq-section">
+  <div class="faq-inner">
+    <div class="faq-head fade-up">
+      <div class="section-label" style="justify-content:center;">
+        <div class="label-line"></div>
+        <span class="label-text">FAQ</span>
+        <div class="label-line"></div>
+      </div>
+      <h2 class="section-title">Got questions?</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What exactly do I get for $9.99?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">You get a complete pre-planned Las Vegas vacation — hotels selected at every budget with direct booking links, restaurants chosen by meal type, a full 3-day itinerary, insider tips, and affiliate links that unlock exclusive rates and perks not available publicly. Everything is ready to go. You just book it yourself at your own pace.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How is this different from just Googling "best Vegas hotels"?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">Google gives you ads, sponsored results, and generic "Top 10" lists written by people who haven't actually been to most of these places. This guide is built from real trips, real bookings, and real travel agent knowledge — including things like which hotels have hidden resort fees, which restaurants are tourist traps, and which pool clubs are actually worth the money.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What are the "exclusive affiliate deals" you mention?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">Every hotel and booking link in the guide runs through our affiliate partnerships — meaning you often get the same room at a lower price, or the same price with added perks (free breakfast, room upgrades, resort credits). These aren't available on Expedia or Google. The guide links directly to these rates so all you have to do is click and book.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What's the difference between this and booking a trip with Nate directly?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">The $9.99 plan is a done-for-you selection of everything — but you handle the actual bookings yourself using the links provided. Booking with Nate means a fully custom proposal built around your exact travel dates, group, and preferences — and he handles every booking for you with full support before and during the trip. Both are solid depending on how hands-on you want to be.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Will there be guides for other cities?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-a">Yes! Las Vegas is just the first. We're building Weekndr guides for all our top destinations — Nashville, Miami, New York, Sedona, and more. Follow along on Instagram @itsnathanlane for updates on when new guides drop.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BOTTOM CTA ─── -->
+<section class="bottom-cta">
+  <div class="bc-inner">
+    <div class="bc-eyebrow">
+      <span>🎰</span>
+      Las Vegas · Trip Guide
+    </div>
+    <!-- TEMPLATE: Update city name -->
+    <h2 class="bc-title">Your best <span>Vegas</span> trip is already planned.</h2>
+    <p class="bc-sub">Hotels picked. Restaurants chosen. Itinerary mapped. Everything you need to skip the research and book a Vegas trip you'll actually love — for less than a cocktail on the Strip.</p>
+    <div class="bc-ctas">
+      <div class="bc-cta-row">
+        <a href="#" class="btn btn-primary btn-lg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Get the Trip Plan — $9.99
+        </a>
+      </div>
+      <div class="bc-or"><span class="bc-or-text">or have Nate handle all the bookings</span></div>
+      <div class="bc-alt">
+        Want full-service? <a href="../index.html#contact">Book with Nate</a> — he creates a custom proposal, handles every booking, and supports you through the whole trip.
+      </div>
+    </div>
+    <div class="bc-guarantee-row">
+      <div class="bc-guarantee-item"><div class="dot"></div>Curated by a real travel agent</div>
+      <div class="bc-guarantee-item"><div class="dot"></div>Instant digital delivery</div>
+      <div class="bc-guarantee-item"><div class="dot"></div>Yours to keep forever</div>
+      <div class="bc-guarantee-item"><div class="dot"></div>Exclusive affiliate pricing</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <img src="../assets/weekndr-logo-white.png" alt="Weekndr">
+      </div>
+      <p class="footer-tagline">Las Vegas–based independent travel agent. Hotels, experiences, and digital itineraries — all built around you.</p>
+    </div>
+    <div class="footer-links-col">
+      <h4>Plan a Trip</h4>
+      <ul>
+        <li><a href="../index.html#how">How It Works</a></li>
+        <li><a href="../services.html">Services</a></li>
+        <li><a href="../index.html#contact">Start Planning</a></li>
+      </ul>
+    </div>
+    <div class="footer-links-col">
+      <h4>Destinations</h4>
+      <ul>
+        <li><a href="../destinations.html">All Destinations</a></li>
+        <li><a href="las-vegas.html">Las Vegas</a></li>
+        <li><a href="../destinations.html">Browse by Type</a></li>
+      </ul>
+    </div>
+    <div class="footer-links-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="mailto:GoWeekndr@outlook.com">Email</a></li>
+        <li><a href="https://instagram.com/LasVegasTravelAgent" target="_blank">Instagram</a></li>
+        <li><a href="https://tiktok.com/@NathanLane.LV" target="_blank">TikTok</a></li>
+      </ul>
+    </div>
+    <div class="footer-links-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="../legal.html">Privacy & Terms</a></li>
+        <li><a href="../legal.html#fcc-affiliate-disclosure">Affiliate Disclosure</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <script>document.write(new Date().getFullYear())</script> Weekndr · Nathan Lane Travel · Made with ❤️ in Las Vegas · <a href="mailto:GoWeekndr@outlook.com" style="color:rgba(255,255,255,0.65);text-decoration:none;">GoWeekndr@outlook.com</a> · Services not available to residents of Florida.</p>
+  </div>
+</footer>
+
+<script>
+// NAV SCROLL
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// HAMBURGER
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+});
+mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  hamburger.classList.remove('open');
+  mobileNav.classList.remove('open');
+}));
+
+// SCROLL ANIMATIONS
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// INCLUDED TABS
+function showPanel(panel, tabEl) {
+  document.querySelectorAll('.inc-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.inc-panel').forEach(p => p.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.getElementById('panel-' + panel).classList.add('active');
+}
+
+// FAQ ACCORDION
+function toggleFaq(el) {
+  const answer = el.nextElementSibling;
+  const isOpen = el.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-q').forEach(q => { q.classList.remove('open'); q.nextElementSibling.classList.remove('open'); });
+  // Open clicked if it was closed
+  if (!isOpen) { el.classList.add('open'); answer.classList.add('open'); }
+}
+</script>
+
+</body>
+</html>

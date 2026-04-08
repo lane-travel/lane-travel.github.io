@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Destinations - Weekndr</title>
+<meta name="description" content="Explore 16 top U.S. destinations with Nathan Lane Travel. From Las Vegas to Vail, discover where your next adventure begins.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ============ RESET & VARIABLES ============ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --brand:       #1749FF;
+  --brand-mid:   #1235CC;
+  --brand-light: #4A6FFF;
+  --brand-pale:  #EEF2FF;
+  --accent:      #1749FF;
+  --accent-light:#4A6FFF;
+  --accent-pale: #EEF2FF;
+  --bg:          #FFFFFF;
+  --bg-mid:      #F5F7FF;
+  --bg-dark:     #E2E8F0;
+  --ink:         #0A0A14;
+  --ink-mid:     #1E1E2E;
+  --ink-light:   #4A4A6A;
+  --muted:       #94A3B8;
+  --white:       #FFFFFF;
+
+  --nav-bg:      rgba(10, 10, 20, 0.96);
+  --border:      rgba(0,0,0,0.08);
+  --border-light:rgba(255,255,255,0.12);
+  --radius:      18px;
+  --radius-sm:   12px;
+  --ease:        cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow:      0 2px 16px rgba(24,21,15,0.08), 0 1px 4px rgba(24,21,15,0.05);
+  --shadow-hover:0 20px 48px rgba(24,21,15,0.18), 0 4px 16px rgba(24,21,15,0.08);
+
+  --font-display:'Outfit', sans-serif;
+  --font-head:   'Sora', sans-serif;
+  --font-body:   'Outfit', sans-serif;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--brand); color: white; }
+
+/* ============ NAV ============ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--nav-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transition: all 0.4s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+nav.scrolled {
+  padding: 12px 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+}
+.nav-logo img {
+  height: 30px; width: auto; display: block;
+}
+.nav-logo-text { display: flex; flex-direction: column; gap: 0; }
+.nav-logo-name { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: white; letter-spacing: -0.3px; line-height: 1.1; }
+.nav-logo-sub  { font-family: var(--font-body); font-size: 9.5px; font-weight: 500; color: rgba(255,255,255,0.45); letter-spacing: 2px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-family: var(--font-body); font-size: 0.82rem; font-weight: 500;
+  color: rgba(255,255,255,0.6); transition: color 0.3s; letter-spacing: 0.01em;
+}
+.nav-links a:hover { color: white; }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 22px; border-radius: 100px;
+  background: var(--brand); color: white;
+  font-family: var(--font-body); font-size: 0.8rem; font-weight: 700;
+  transition: all 0.3s var(--ease); cursor: pointer; border: none;
+  letter-spacing: 0.01em;
+}
+.nav-cta:hover { background: var(--brand-light); transform: translateY(-1px); }
+
+/* Hamburger */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px; background: none; border: none;
+}
+.hamburger span { display: block; width: 22px; height: 1.5px; background: white; transition: all 0.3s var(--ease); }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+.mobile-nav {
+  display: none; position: fixed; inset: 0; z-index: 99;
+  background: var(--brand); opacity: 0.98;
+  flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a { font-family: var(--font-head); font-size: 1.8rem; font-weight: 700; color: white; transition: opacity 0.3s; }
+.mobile-nav a:hover { opacity: 0.5; }
+.mobile-nav .mobile-cta { background: var(--brand-light); color: white; padding: 14px 36px; border-radius: 100px; font-size: 1rem; font-weight: 800; }
+
+/* ============ DESTINATIONS SECTION ============ */
+body { padding-top: 80px; }
+
+.destinations-hero {
+  background: linear-gradient(135deg, #0f0f17 0%, #1a1a2e 100%);
+  color: white;
+  padding: 80px 48px;
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.destinations-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  margin-bottom: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.destinations-hero p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.destinations-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.destinations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  margin-bottom: 80px;
+}
+
+.destination-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.35s var(--ease);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.destination-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-hover);
+}
+
+.destination-image {
+  width: 100%;
+  height: 240px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+.destination-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));
+}
+
+.destination-content {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.destination-name {
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.destination-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink-light);
+  margin-bottom: 20px;
+  flex-grow: 1;
+  line-height: 1.6;
+}
+
+.destination-cta {
+  display: inline-block;
+  background: var(--brand);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s var(--ease);
+  align-self: flex-start;
+  font-family: var(--font-body);
+  letter-spacing: 0.01em;
+}
+
+.destination-cta:hover {
+  background: var(--brand-mid);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(23, 73, 255, 0.3);
+}
+
+/* ============ CTA SECTION ============ */
+.destinations-cta {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-light) 100%);
+  color: white;
+  padding: 80px 48px;
+  text-align: center;
+  border-radius: 16px;
+  margin: 0 48px 80px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.destinations-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.destinations-cta p {
+  font-size: 1.1rem;
+  margin-bottom: 32px;
+  opacity: 0.95;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.destinations-cta a {
+  display: inline-block;
+  background: white;
+  color: var(--brand);
+  padding: 14px 36px;
+  border-radius: 100px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s var(--ease);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.destinations-cta a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* ============ FOOTER ============ */
+footer {
+  background: var(--ink-mid);
+  color: white;
+  padding: 64px 48px 20px;
+  margin-top: 0;
+}
+
+footer .footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-brand {}
+.footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.footer-logo img { height: 36px; width: auto; display: block; }
+
+.footer-tagline {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 280px;
+  line-height: 1.7;
+}
+
+.footer-links-col h4 {
+  font-family: var(--font-head);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 16px;
+}
+
+.footer-links-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links-col a {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+.footer-links-col a:hover { color: white; }
+
+footer > div:nth-child(2) {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 16px 0;
+  text-align: center;
+  margin-bottom: 8px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+footer > div:nth-child(2) p {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+footer > div:nth-child(2) a {
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: underline;
+}
+
+footer > div:nth-child(2) a:hover {
+  color: white;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-copy {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer-love {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer-love a { color: rgba(255, 255, 255, 0.65); text-decoration: none; }
+.footer-love a:hover { color: white; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .destinations-container { padding: 0 32px; }
+  .destinations-cta { margin: 0 32px 60px; padding: 60px 32px; }
+  footer .footer-top { grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .nav-right { gap: 15px; }
+  .hamburger { display: flex; }
+
+  body { padding-top: 70px; }
+
+  .destinations-hero { padding: 50px 20px; margin-bottom: 50px; }
+  .destinations-hero h1 { font-size: 2rem; }
+
+  .destinations-container { padding: 0 20px; }
+  .destinations-grid { gap: 24px; }
+
+  .destination-image { height: 200px; }
+  .destination-content { padding: 20px; }
+  .destination-name { font-size: 1.1rem; }
+  .destination-desc { font-size: 0.9rem; }
+
+  .destinations-cta { margin: 0 20px 50px; padding: 50px 20px; }
+  .destinations-cta h2 { font-size: 1.6rem; }
+  .destinations-cta p { font-size: 1rem; }
+
+  footer { padding: 40px 20px 16px; }
+  footer .footer-top { grid-template-columns: 1fr; gap: 30px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .footer-copy { text-align: center; }
+}
+
+</style>
+</head>
+<body>
+
+
+<!-- HERO -->
+<div class="destinations-hero">
+  <h1>Explore Top Destinations</h1>
+  <p>From desert sunsets to mountain peaks, coastal getaways to vibrant cities — discover where your next adventure begins. I've planned trips to all these places and know exactly how to make them unforgettable.</p>
+</div>
+
+<!-- DESTINATIONS GRID -->
+<div class="destinations-container">
+  <div class="destinations-grid">
+    <!-- Las Vegas -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1581351721010-8cf859cb14a4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Las Vegas</h3>
+        <p class="destination-desc">My home turf. World-class shows, restaurants, pools, and weekend escapes from LA. I've got the insider connections.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- LA -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/flagged/photo-1575555201693-7cd442b8023f?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Los Angeles</h3>
+        <p class="destination-desc">Beach culture, studio tours, hiking, and endless dining. Perfect for a mix of relaxation and exploration.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- San Francisco -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1554107136-57b138ea99df?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">San Francisco</h3>
+        <p class="destination-desc">Golden Gate views, tech innovation, wine country nearby, and incredible food. A must-visit West Coast gem.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- San Diego -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1519954352454-2d5a7353e277?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">San Diego</h3>
+        <p class="destination-desc">Perfect weather year-round, beautiful beaches, craft beer scene, and laid-back California vibes.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Nashville -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1556033681-83abea291a96?q=80&w=1264&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Nashville</h3>
+        <p class="destination-desc">Live music capital. Broadway nights, hot chicken, and Southern charm. Energy and good vibes guaranteed.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Savannah -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1597199813662-c1f22fee941c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Savannah, GA</h3>
+        <p class="destination-desc">Historic squares, moss-draped oaks, riverfront charm, and Southern hospitality. Romantic and timeless.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Miami -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1589083130544-0d6a2926e519?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8TWlhbWl8ZW58MHx8MHx8fDA%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Miami</h3>
+        <p class="destination-desc">Art deco, nightlife, beaches, Latin flavor, and year-round warmth. Perfect for a vibrant city escape.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- NYC -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1496588152823-86ff7695e68f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8TmV3JTIwWW9yayUyMENpdHl8ZW58MHx8MHx8fDA%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">New York City</h3>
+        <p class="destination-desc">The city that never sleeps. Broadway, museums, restaurants, and that electric urban energy.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Martha's Vineyard -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1737347606996-62db45e3cf5b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Martha's Vineyard</h3>
+        <p class="destination-desc">Charming New England coastal escape. Gingerbread houses, beaches, and quintessential American charm.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Grand Canyon -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1615551043360-33de8b5f410c?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Grand Canyon</h3>
+        <p class="destination-desc">One of Earth's natural wonders. Hiking, viewpoints, and sunrises that take your breath away.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Sedona -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1609867019918-c185d3304740?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2Vkb25hJTIwYXp8ZW58MHx8MHx8fDA%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Sedona</h3>
+        <p class="destination-desc">Red rock formations, hiking trails, galleries, spas, and spiritual energy. Stunning and rejuvenating.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Napa Valley -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1471882181801-6e5da44feb5a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8TmFwYSUyMFZhbGxleXxlbnwwfHwwfHx8MA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Napa Valley</h3>
+        <p class="destination-desc">World-class wineries, vineyard views, farm-to-table dining, and culinary excellence. Sophisticated escape.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Austin -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1588993608283-7f0eda4438be?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8QXVzdGluJTJDJTIwVFh8ZW58MHx8MHx8fDA%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Austin, TX</h3>
+        <p class="destination-desc">Live music, food trucks, outdoor vibes, and "Keep Austin Weird" culture. Fun, creative, and energetic.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Park City -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1708994917239-67d6be99b4c3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fFBhcmslMjBDaXR5JTJDJTIwVVR8ZW58MHx8MHx8fDA%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Park City, UT</h3>
+        <p class="destination-desc">World-class skiing, cozy lodges, après-ski culture, and mountain scenery. Winter and summer adventures.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Estes Park -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1621861641130-6a5c470ee761?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fEVzdGVzJTIwUGFyayUyQyUyMENPfGVufDB8fDB8fHww');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Estes Park, CO</h3>
+        <p class="destination-desc">Gateway to Rocky Mountain National Park. Hiking, wildlife, alpine scenery, and mountain lodge charm.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Vail -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1641957449475-31200d42b183?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8VmFpbCUyQyUyMENPfGVufDB8fDB8fHww');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Vail, CO</h3>
+        <p class="destination-desc">Premier ski destination. Powdery slopes, luxe resorts, mountain dining, and year-round recreation.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Maui, Hawaii -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1767744649134-9741c1613d4d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8TWF1aSUyQyUyMEhhd2FpaSUzQXxlbnwwfHwwfHx8MA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Maui, Hawaii</h3>
+        <p class="destination-desc">Tropical paradise with golden beaches, lush valleys, ocean adventures, and island romance. Pure aloha spirit.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+
+    <!-- Denali, Alaska -->
+    <div class="destination-card">
+      <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1624469600761-6acd071481d9?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
+      <div class="destination-content">
+        <h3 class="destination-name">Denali, Alaska</h3>
+        <p class="destination-desc">North America's highest peak, pristine wilderness, wildlife viewing, and breathtaking alpine scenery. Epic adventure awaits.</p>
+        <a href="index.html#contact" class="destination-cta">Plan Your Trip</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA SECTION -->
+<div class="destinations-cta">
+  <h2>Ready to Explore?</h2>
+  <p>Don't see your dream destination on this list? No problem — I plan trips everywhere. Let's talk about where you want to go and how we can make it unforgettable.</p>
+  <a href="index.html#contact">Start Planning Your Trip</a>
+</div>
+
+
+<script src="js/layout.js"></script>
+</body>
+</html>

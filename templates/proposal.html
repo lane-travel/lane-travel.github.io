@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekndr · Nathan Lane Travel · <!-- DESTINATION --> · <!-- DATE RANGE --></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #FFFFFF;
+  --bg-mid:      #F5F7FF;
+  --bg-dark:     #E2E8F0;
+  --ink:         #0A0A14;
+  --ink-mid:     #1E1E2E;
+  --ink-light:   #4A4A6A;
+  --muted:       #94A3B8;
+  --brand:       #1749FF;
+  --brand-mid:   #1235CC;
+  --brand-light: #4A6FFF;
+  --brand-pale:  #EEF2FF;
+  --accent:      #1749FF;
+  --accent-light:#4A6FFF;
+  --accent-pale: #EEF2FF;
+  --white:       #FFFFFF;
+  --radius:      18px;
+  --radius-sm:   12px;
+  --shadow:      0 2px 16px rgba(10,10,20,0.08), 0 1px 4px rgba(10,10,20,0.05);
+  --shadow-hover:0 20px 48px rgba(23,73,255,0.15), 0 4px 16px rgba(10,10,20,0.08);
+  --shadow-panel:-8px 0 48px rgba(10,10,20,0.18);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-mid); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+/* ─── HEADER ─── */
+.site-header {
+  background: rgba(10, 10, 20, 0.96);
+  height: 64px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-mark {
+  width: 36px; height: 36px;
+  background: transparent;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 800; font-size: 11px;
+  color: var(--brand);
+  letter-spacing: 0.5px; line-height: 1;
+}
+.logo-word { font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: white; letter-spacing: -0.3px; }
+.logo-tagline { font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.45); letter-spacing: 2px; text-transform: uppercase; margin-top: 1px; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.trip-pill {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: rgba(255,255,255,0.85);
+  padding: 7px 16px; border-radius: 100px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.2px;
+}
+.shortlist-btn {
+  background: var(--brand); color: white;
+  border: none; padding: 8px 18px 8px 14px;
+  border-radius: 100px;
+  font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: background 0.2s;
+}
+.shortlist-btn:hover { background: var(--brand-light); }
+.shortlist-count {
+  background: rgba(255,255,255,0.3); color: white;
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+  transition: all 0.2s;
+}
+
+/* ─── HERO ─── */
+.hero { max-width: 1120px; margin: 0 auto; padding: 72px 40px 52px; }
+.hero-label { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.label-line { width: 32px; height: 2px; background: var(--accent); border-radius: 2px; }
+.label-text { font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--brand-mid); }
+.hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 82px; font-weight: 300;
+  line-height: 0.95; letter-spacing: -2.5px;
+  color: var(--ink); margin-bottom: 28px;
+}
+.hero h1 .italic { font-style: italic; color: var(--brand-mid); }
+.hero-stats { display: flex; align-items: center; gap: 0; margin-bottom: 36px; flex-wrap: wrap; }
+.hero-stat {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 500; color: var(--ink-light);
+  padding: 0 24px; border-right: 1px solid var(--bg-dark);
+}
+.hero-stat:first-child { padding-left: 0; }
+.hero-stat:last-child  { border-right: none; }
+.stat-icon {
+  width: 32px; height: 32px;
+  background: var(--brand-pale); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--brand-mid); flex-shrink: 0;
+}
+.agent-card {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--white); border-radius: var(--radius);
+  padding: 20px 24px; max-width: 700px;
+  box-shadow: var(--shadow); border-left: 4px solid var(--accent);
+}
+.agent-avatar {
+  width: 40px; height: 40px;
+  background: var(--brand); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 800;
+  font-family: 'Outfit', sans-serif;
+  font-style: italic; font-size: 18px; flex-shrink: 0;
+}
+.agent-text { font-size: 14px; line-height: 1.65; color: var(--ink-mid); }
+.agent-text strong { color: var(--ink); font-weight: 700; }
+
+/* ─── FILTERS ─── */
+.filters-wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px 36px; }
+.filters-label { font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 12px; }
+.filters-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-btn {
+  background: var(--white); border: 1.5px solid var(--bg-dark);
+  color: var(--ink-light); padding: 9px 20px; border-radius: 100px;
+  font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--brand-mid); color: var(--brand); }
+.filter-btn.active { background: var(--brand); border-color: var(--brand); color: white; }
+
+/* ─── SECTION LABEL (in grid) ─── */
+.grid-section-header {
+  grid-column: 1/-1;
+  display: flex; align-items: center; gap: 14px;
+  padding: 8px 0 4px;
+  margin-top: 8px;
+}
+.grid-section-header .gsh-label {
+  font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 2.5px; color: var(--brand-mid);
+  white-space: nowrap;
+}
+.grid-section-header .gsh-line {
+  flex: 1; height: 1px; background: var(--bg-dark);
+}
+
+/* ─── GRID ─── */
+.grid-wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px 100px; }
+.cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+
+/* ─── CARD ─── */
+.card {
+  background: var(--white); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow);
+  cursor: pointer; transition: transform 0.3s cubic-bezier(0.2,0,0,1), box-shadow 0.3s ease;
+  animation: fadeUp 0.5s ease both;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card-img { height: 185px; position: relative; overflow: hidden; }
+.card-img-bg { position: absolute; inset: 0; transition: transform 0.5s ease; }
+.card-img-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.card:hover .card-img-photo,
+.card:hover .card-img-bg { transform: scale(1.06); }
+.card-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.38) 100%);
+  pointer-events: none;
+}
+.card-img-letter {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 80px; font-weight: 300; font-style: italic;
+  color: rgba(255,255,255,0.1); pointer-events: none; user-select: none;
+}
+.card-badges { position: absolute; top: 12px; left: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+.badge { padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; letter-spacing: 0.2px; backdrop-filter: blur(12px); }
+.badge-agent    { background: rgba(23,73,255,0.95); color: white; }
+.badge-value    { background: rgba(23,73,255,0.9);   color: white; }
+.badge-top      { background: rgba(255,255,255,0.92); color: #1749FF; }
+.badge-dining   { background: rgba(23,73,255,0.9);   color: white; }
+.badge-activity { background: rgba(23,73,255,0.95); color: white; }
+.badge-flight   { background: rgba(23,73,255,0.9);  color: white; }
+.badge-car      { background: rgba(23,73,255,0.9);   color: white; }
+.badge-transfer { background: rgba(50,50,50,0.9);   color: #E0E0E0; }
+.badge-cruise   { background: rgba(23,73,255,0.9);    color: white; }
+.badge-park     { background: rgba(120,20,20,0.9);  color: #FFB8B8; }
+
+/* Viator add-on card */
+.viator-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 2px dashed var(--bg-dark);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 36px 28px; text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer; text-decoration: none;
+  animation: fadeUp 0.5s ease both;
+}
+.viator-card:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); }
+.viator-icon { font-size: 36px; margin-bottom: 12px; }
+.viator-title { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+.viator-sub { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 18px; }
+.viator-btn { background: var(--brand); color: white; padding: 10px 22px; border-radius: 100px; font-size: 12px; font-weight: 700; font-family: 'Sora', sans-serif; letter-spacing: 0.5px; display: inline-block; }
+
+/* filter-btn viator variant */
+.filter-btn.viator-tab { border-color: var(--accent); color: var(--accent); }
+.filter-btn.viator-tab:hover { background: var(--accent-pale); border-color: var(--accent); }
+
+.heart-btn {
+  position: absolute; top: 12px; right: 12px;
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.9); border: none; border-radius: 50%;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.heart-btn:hover { transform: scale(1.12); background: white; }
+.heart-btn.saved { background: var(--gold); }
+.heart-btn svg { transition: fill 0.2s; }
+.heart-btn.saved svg { fill: white; stroke: white; }
+
+.card-body { padding: 20px 20px 18px; }
+.card-tag {
+  font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.8px; color: var(--muted); margin-bottom: 7px;
+  display: flex; align-items: center; gap: 6px;
+}
+.card-tag::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); display: inline-block; }
+.card-name { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; line-height: 1.1; color: var(--ink); margin-bottom: 7px; }
+.card-loc { font-size: 12px; color: var(--muted); font-weight: 500; margin-bottom: 14px; display: flex; align-items: center; gap: 5px; }
+.card-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.chip { background: var(--bg); color: var(--ink-mid); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 500; }
+.chip.gold { background: var(--accent-pale); color: #0F2B7F; }
+.chip.green { background: var(--brand-pale); color: #0F2B7F; }
+
+.card-foot { display: flex; align-items: flex-end; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--bg-mid); }
+.price-label { font-family: 'Sora', sans-serif; font-size: 10px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+.price-was { font-size: 12px; color: var(--muted); text-decoration: line-through; }
+.price-main { display: flex; align-items: baseline; gap: 6px; }
+.price-num { font-size: 30px; font-weight: 800; color: var(--ink); line-height: 1; }
+.price-off { font-size: 12px; font-weight: 700; color: var(--brand-mid); background: var(--brand-pale); padding: 2px 7px; border-radius: 4px; }
+.score-block { text-align: right; }
+.score-num { font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 800; color: var(--brand); line-height: 1; }
+.score-label { font-size: 11px; font-weight: 600; color: var(--ink-mid); }
+.score-reviews { font-size: 10px; color: var(--muted); }
+
+/* ─── EMPTY STATE ─── */
+.empty { grid-column: 1/-1; text-align: center; padding: 80px 20px; color: var(--muted); }
+.empty h3 { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; margin-bottom: 8px; color: var(--ink-mid); }
+.empty p { font-size: 14px; }
+
+/* ─── OVERLAY ─── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(24,21,15,0.55); backdrop-filter: blur(6px);
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
+}
+.overlay.on { opacity: 1; pointer-events: all; }
+
+/* ─── PANEL ─── */
+.panel {
+  position: fixed; top: 0; right: 0;
+  width: min(600px, 100vw); height: 100dvh;
+  background: var(--white); z-index: 201;
+  overflow-y: auto; transform: translateX(100%);
+  transition: transform 0.42s cubic-bezier(0.2,0,0,1);
+  box-shadow: var(--shadow-panel); display: flex; flex-direction: column;
+}
+.panel.on { transform: translateX(0); }
+.panel-hero { height: 260px; position: relative; flex-shrink: 0; overflow: hidden; }
+.panel-hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.panel-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%); }
+.panel-hero-letter {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: 'Outfit', sans-serif; font-size: 96px; font-weight: 800; font-style: normal;
+  color: rgba(255,255,255,0.1); pointer-events: none;
+}
+.panel-close {
+  position: absolute; top: 16px; left: 16px;
+  width: 40px; height: 40px; background: rgba(255,255,255,0.94);
+  border: none; border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--ink-mid); transition: all 0.2s; backdrop-filter: blur(12px);
+}
+.panel-close:hover { background: white; transform: scale(1.06); }
+.panel-agent-badge {
+  position: absolute; bottom: 16px; right: 16px;
+  background: rgba(196,140,46,0.95); color: var(--green);
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 12px; font-weight: 700; backdrop-filter: blur(12px);
+}
+.panel-body { padding: 28px 32px 40px; flex: 1; }
+.panel-eyebrow { font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--green-mid); margin-bottom: 8px; }
+.panel-title { font-family: 'Outfit', sans-serif; font-size: 32px; font-weight: 700; line-height: 1.05; color: var(--ink); margin-bottom: 10px; }
+.panel-addr { font-size: 13px; color: var(--muted); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.panel-near { font-size: 13px; color: var(--green-mid); font-weight: 500; margin-bottom: 22px; display: flex; align-items: center; gap: 6px; }
+
+/* score row */
+.score-row { display: flex; align-items: stretch; gap: 0; background: var(--cream); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 24px; }
+.score-main { padding: 18px 22px; border-right: 1px solid var(--cream-dark); }
+.score-big { font-size: 38px; font-weight: 800; color: var(--green); line-height: 1; }
+.score-word { font-size: 14px; font-weight: 600; color: var(--ink); margin-top: 2px; }
+.score-rev { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.score-cats { display: flex; gap: 0; flex: 1; }
+.score-cat { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px 8px; border-right: 1px solid var(--cream-dark); }
+.score-cat:last-child { border-right: none; }
+.score-cat-num { font-size: 18px; font-weight: 700; color: var(--ink); }
+.score-cat-name { font-size: 10px; color: var(--muted); font-weight: 600; letter-spacing: 0.5px; margin-top: 3px; }
+
+/* agent note panel */
+.agent-note-panel {
+  display: flex; gap: 14px; align-items: flex-start;
+  background: var(--accent-pale); border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 14px 18px; margin-bottom: 24px;
+}
+.agent-note-panel .aa { width:42px;height:34px;background:var(--brand);color:white;border-radius:100px;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-style:normal;font-weight:700;font-size:11px;letter-spacing:0.5px;flex-shrink:0;padding:0 10px; }
+.agent-note-panel p { font-size: 13px; line-height: 1.6; color: var(--ink-mid); }
+.agent-note-panel strong { color: var(--ink); }
+
+/* section title in panel */
+.section-t {
+  font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 2px; color: var(--ink-mid);
+  margin: 28px 0 14px; display: flex; align-items: center; gap: 10px;
+}
+.section-t::after { content: ''; flex: 1; height: 1px; background: var(--bg-dark); }
+
+/* amenities */
+.amenities-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 4px; }
+.amenity { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-mid); }
+.amenity-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand-light); flex-shrink: 0; }
+
+/* rooms */
+.rooms-list { display: flex; flex-direction: column; gap: 12px; }
+.room { border: 1.5px solid var(--bg-mid); border-radius: var(--radius-sm); padding: 15px 18px; transition: border-color 0.2s; }
+.room.avail { border-color: #C5DDC8; background: #F8FBF8; }
+.room.sold { opacity: 0.45; }
+.room-name { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 7px; }
+.room-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.room-meta span { font-size: 12px; color: var(--ink-light); display: flex; align-items: center; gap: 4px; }
+.room-foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.room-was { font-size: 12px; color: var(--muted); text-decoration: line-through; }
+.room-price { font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1; }
+.room-disc { font-size: 11px; font-weight: 700; color: var(--brand-mid); margin-left: 6px; }
+.room-total { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.room-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.policy-chip { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+.chip-green { background: var(--brand-pale); color: #0F2B7F; }
+.chip-orange { background: #FEF3EC; color: #8B4000; }
+.chip-gray { background: var(--bg-mid); color: var(--muted); }
+.room-left-tag { font-size: 11px; font-weight: 700; color: white; background: var(--accent); padding: 3px 9px; border-radius: 4px; }
+.reserve-btn { background: var(--brand); color: white; border: none; padding: 9px 18px; border-radius: 8px; font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+.reserve-btn:hover { background: var(--brand-light); }
+
+/* reviews */
+.reviews-list { display: flex; flex-direction: column; gap: 12px; }
+.review { background: var(--bg); border-radius: var(--radius-sm); padding: 14px 16px; }
+.review-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.review-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+.review-score { background: var(--brand); color: white; padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 700; }
+.review-text { font-size: 13px; color: var(--ink-mid); line-height: 1.55; font-style: italic; }
+.review-date { font-size: 11px; color: var(--muted); margin-top: 7px; }
+
+/* policies */
+.policies-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.policy-block { background: var(--bg); border-radius: var(--radius-sm); padding: 14px 16px; }
+.policy-title { font-family: 'Sora', sans-serif; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 6px; }
+.policy-val { font-size: 13px; color: var(--ink-mid); line-height: 1.5; }
+.policy-full { grid-column: 1/-1; }
+.info-note { margin-top: 14px; padding: 12px 16px; background: var(--bg); border-radius: var(--radius-sm); font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* activity/dining panel */
+.detail-desc { font-size: 14px; line-height: 1.7; color: var(--ink-mid); margin-bottom: 20px; }
+.detail-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.detail-meta-cell { background: var(--bg); border-radius: var(--radius-sm); padding: 14px 16px; }
+.detail-meta-cell label { display: block; font-family: 'Sora', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.detail-meta-cell span { font-size: 14px; color: var(--ink); font-weight: 600; }
+
+/* includes list */
+.includes-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
+.includes-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-mid); }
+.inc-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* save panel button */
+.save-panel-btn {
+  width: 100%; padding: 15px; border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all 0.25s; margin-top: 28px;
+}
+.save-panel-btn.unsaved { background: var(--brand); color: white; }
+.save-panel-btn.unsaved:hover { background: var(--brand-light); }
+.save-panel-btn.saved-state { background: var(--accent-pale); color: var(--accent); border: 2px solid var(--accent); }
+
+/* ─── SHORTLIST DRAWER ─── */
+.shortlist-panel {
+  position: fixed; top: 0; right: 0;
+  width: min(480px, 100vw); height: 100dvh;
+  background: rgba(10, 10, 20, 0.96); z-index: 201;
+  overflow-y: auto; transform: translateX(100%);
+  transition: transform 0.42s cubic-bezier(0.2,0,0,1);
+  display: flex; flex-direction: column;
+  padding: 32px;
+}
+.shortlist-panel.on { transform: translateX(0); }
+.shortlist-panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+.shortlist-panel-title { font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 700; color: white; }
+.sp-close { background: rgba(255,255,255,0.12); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; color: white; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+.sp-close:hover { background: rgba(255,255,255,0.2); }
+.shortlist-items { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.sp-item { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+.sp-item-color { width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0; }
+.sp-item-name { font-size: 15px; font-weight: 700; color: white; margin-bottom: 3px; }
+.sp-item-sub { font-size: 12px; color: rgba(255,255,255,0.5); }
+.sp-item-price { margin-left: auto; font-size: 18px; font-weight: 800; color: var(--gold-light); white-space: nowrap; }
+.sp-remove { background: none; border: none; color: rgba(255,255,255,0.3); font-size: 18px; cursor: pointer; padding: 4px; transition: color 0.2s; }
+.sp-remove:hover { color: white; }
+.sp-empty { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.4); }
+.sp-empty p { font-size: 14px; margin-top: 8px; }
+
+.shortlist-footer { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 24px; margin-top: 24px; }
+.sp-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+.sp-total-label { font-family: 'Sora', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.sp-total-amt { font-family: 'Outfit', sans-serif; font-size: 36px; font-weight: 700; color: white; }
+.booking-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.book-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  padding: 16px 10px; border: none; border-radius: var(--radius-sm);
+  cursor: pointer; transition: all 0.2s var(--ease); text-align: center;
+  font-family: 'Sora', sans-serif;
+}
+.book-btn-icon { font-size: 22px; line-height: 1; margin-bottom: 2px; }
+.book-btn-title { font-size: 14px; font-weight: 800; letter-spacing: 0.2px; }
+.book-btn-sub { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; line-height: 1.3; opacity: 0.75; }
+.book-btn.starred { background: #FFFFFF; color: #0A0A14; }
+.book-btn.starred:hover { background: #EEF2FF; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,255,0.15); }
+.book-btn.express { background: var(--accent); color: white; }
+.book-btn.express:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(23,73,255,0.35); }
+.sp-note { font-size: 11px; color: rgba(255,255,255,0.35); text-align: center; margin-top: 4px; line-height: 1.5; }
+
+/* ─── FOOTER ─── */
+.site-footer {
+  background: rgba(10, 10, 20, 0.96); padding: 36px 40px; text-align: center;
+  color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.8;
+}
+.site-footer .wk { color: rgba(255,255,255,0.9); font-weight: 700; }
+.site-footer a { color: var(--accent-light); text-decoration: none; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) { .cards-grid { grid-template-columns: repeat(2,1fr); } .hero h1 { font-size: 58px; } }
+@media (max-width: 640px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 44px; letter-spacing: -1.5px; }
+  .hero, .filters-wrap, .grid-wrap { padding-left: 20px; padding-right: 20px; }
+  .site-header { padding: 0 20px; }
+  .score-cats { display: none; }
+  .panel-body { padding: 20px 22px 36px; }
+  .policies-grid, .detail-meta-grid { grid-template-columns: 1fr; }
+  .amenities-list { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="/" class="logo">
+    <img src="assets/weekndr-logo-white.png" alt="Weekndr" style="height:30px;width:auto;display:block;">
+    <div>
+      <div class="logo-word">Nathan Lane</div>
+      <div class="logo-tagline">Travel Agent · Las Vegas</div>
+    </div>
+  </a>
+  <div class="header-right">
+    <span class="trip-pill" id="headerPill">✈ <!-- DESTINATION --> · <!-- DATE RANGE --> · <!-- # --> travelers</span>
+    <button class="shortlist-btn" onclick="viewShortlist()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      My Picks
+      <span class="shortlist-count" id="shortlistCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">
+    <div class="label-line"></div>
+    <span class="label-text">Curated by Nathan Lane</span>
+  </div>
+  <!-- ↓ Edit title — put destination on line 1, tagline on line 2 -->
+  <h1 id="heroTitle">Your <!-- DESTINATION --><br><span class="italic"><!-- TAGLINE e.g. "Escape." --></span></h1>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="stat-icon">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <span id="statDates"><!-- DATE RANGE --> · <!-- # --> nights</span>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-icon">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <span id="statTravelers"><!-- # --> travelers</span>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-icon">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <span id="statDest"><!-- DESTINATION --></span>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-icon">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <span id="statCount">Loading…</span>
+    </div>
+  </div>
+  <div class="agent-card">
+    <div class="agent-avatar">N</div>
+    <!-- ↓ Edit agent greeting message for this client -->
+    <p class="agent-text" id="agentGreeting">
+      Hey <strong><!-- CLIENT FIRST NAME --></strong>! <!-- PERSONALIZED AGENT MESSAGE. e.g. "I found the best options across the Strip for your birthday weekend. My top pick is starred — use the ♥ button to save your favorites and I'll put together your final quote." --> <strong>— Nate</strong>
+    </p>
+  </div>
+</section>
+
+<!-- FILTERS — built dynamically by JS based on what's in DATA[] -->
+<div class="filters-wrap">
+  <div class="filters-label">Browse by</div>
+  <div class="filters-row" id="filtersRow"></div>
+</div>
+
+<!-- GRID -->
+<div class="grid-wrap">
+  <div class="cards-grid" id="cardsGrid"></div>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<!-- DETAIL PANEL -->
+<div class="panel" id="panel">
+  <div id="panelInner"></div>
+</div>
+
+<!-- SHORTLIST PANEL -->
+<div class="shortlist-panel" id="shortlistPanel">
+  <div class="shortlist-panel-header">
+    <div class="shortlist-panel-title">My Picks</div>
+    <button class="sp-close" onclick="closeShortlist()">✕</button>
+  </div>
+  <div class="shortlist-items" id="shortlistItems"></div>
+  <div class="shortlist-footer" id="shortlistFooter" style="display:none">
+    <div class="sp-total-row">
+      <span class="sp-total-label">Estimated Total</span>
+      <span class="sp-total-amt" id="spTotal">$0</span>
+    </div>
+    <div class="booking-options">
+      <button class="book-btn starred" onclick="bookNow('starred')">
+        <span class="book-btn-icon">⭐</span>
+        <span class="book-btn-title">Starred</span>
+        <span class="book-btn-sub">Full concierge service</span>
+      </button>
+      <button class="book-btn express" onclick="bookNow('express')">
+        <span class="book-btn-icon">⚡</span>
+        <span class="book-btn-title">Express</span>
+        <span class="book-btn-sub">Quick booking, fast turnaround</span>
+      </button>
+    </div>
+    <p class="sp-note">Select your service level to pay your booking fee and lock in your trip.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <span class="wk">Nathan Lane</span> · Curated by Nathan Lane exclusively for <span id="footerClient"><!-- CLIENT NAME --></span><br>
+  <span id="footerTrip"><!-- DESTINATION --> · <!-- DATE RANGE --></span><br>
+  <span style="font-size:11px;opacity:0.6;">Prices include taxes &amp; fees · Availability subject to change · Contact Nate to book</span><br>
+  <span style="font-size:11px;opacity:0.6;">Questions? <a href="mailto:<!-- YOUR EMAIL -->"><!-- YOUR EMAIL --></a> · <a href="tel:<!-- YOUR PHONE -->"><!-- YOUR PHONE --></a></span>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  ██████╗  █████╗ ████████╗ █████╗
+//  ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
+//  ██║  ██║███████║   ██║   ███████║
+//  ██║  ██║██╔══██║   ██║   ██╔══██║
+//  ██████╔╝██║  ██║   ██║   ██║  ██║
+//  ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+//
+//  HOW TO FILL THIS IN:
+//  1. Each object in DATA[] is one card (hotel, activity, or dining)
+//  2. Set type: 'hotel' | 'activity' | 'dining'
+//  3. Paste photo URLs from Expedia TAAP listing pages
+//  4. For hotels: fill in rooms[] array with each room option
+//  5. Set isAgent:true on your recommended pick
+//  6. Set isValue:true on the best value option
+//  7. gradient is the fallback color if no photo — pick any CSS gradient
+// ═══════════════════════════════════════════════════════════
+
+const DATA = [
+
+  // ────────────────────────────────────────────
+  // HOTEL 1 — AGENT'S PICK
+  // ────────────────────────────────────────────
+  {
+    id: 1,
+    type: 'hotel',
+    name: 'Hotel Name Here',
+    loc:  'Neighborhood, City',
+    stars: 5,
+    score: 9.0,
+    scoreWord: 'Exceptional',
+    reviews: 1200,
+    cats: { Cleanliness: 9.2, Location: 9.0, Service: 9.1 },
+    addr: 'Full street address here',
+    near: 'Distance to key landmark or attraction',
+    gradient: 'linear-gradient(145deg,#1749FF 0%,#4A6FFF 55%,#1749FF 100%)',
+    photo: '',  // ← paste Expedia/TAAP image URL here
+    isAgent: true,    // ← true = "Agent's Pick" badge
+    isValue: false,
+    hasBreakfast: false,
+    price: 0,         // ← lowest starting price per night
+    priceWas: 0,      // ← original price (0 = no strikethrough)
+    disc: 0,          // ← % discount (0 = no badge)
+    highlights: [
+      'Highlight 1 (e.g. Rooftop pool)',
+      'Highlight 2 (e.g. Free cancellation)',
+      'Highlight 3 (e.g. Free WiFi)',
+    ],
+    amenities: [
+      'Amenity 1',
+      'Amenity 2',
+      'Amenity 3',
+      'Amenity 4',
+      'Amenity 5',
+      'Amenity 6',
+    ],
+    rooms: [
+      // Each object is a room option shown in the detail panel
+      {
+        n: 'Room Type Name',
+        beds: '1 King Bed',
+        sleeps: 2,
+        size: '',           // optional sq ft/m
+        view: '',           // optional view type
+        price: 0,           // per night
+        was: 0,             // original per night (0 = hide)
+        total: 0,           // total for all nights
+        disc: 0,            // % discount
+        refund: true,       // true = Free cancellation chip
+        left: 0,            // rooms left (0 = don't show)
+        soldOut: false,
+      },
+      {
+        n: 'Room Type 2',
+        beds: '2 Queen Beds',
+        sleeps: 4,
+        price: 0,
+        was: 0,
+        total: 0,
+        disc: 0,
+        refund: true,
+        soldOut: false,
+      },
+    ],
+    reviews_list: [
+      { name: 'Guest Name', score: 10, text: 'Review text here.', date: 'Month Year' },
+      { name: 'Guest Name', score: 9,  text: 'Review text here.', date: 'Month Year' },
+    ],
+    checkin:  'Check-in time · Min. age policy',
+    checkout: 'Checkout time · Late checkout policy',
+    pets:     'Pet policy here',
+    parking:  'Parking info and price here',
+    deposit:  null,   // or 'deposit details'
+    notes:    'Any other property notes (LGBTQ+ friendly, etc.)',
+    agentNote: 'Your personal recommendation note for this property. Why you like it, why it fits this client.',
+  },
+
+  // ────────────────────────────────────────────
+  // HOTEL 2 — BEST VALUE
+  // ────────────────────────────────────────────
+  {
+    id: 2,
+    type: 'hotel',
+    name: 'Hotel Name Here',
+    loc:  'Neighborhood, City',
+    stars: 4,
+    score: 8.4,
+    scoreWord: 'Very Good',
+    reviews: 800,
+    cats: { Cleanliness: 8.6, Location: 8.0, Service: 8.4 },
+    addr: 'Full street address',
+    near: 'Nearby landmarks',
+    gradient: 'linear-gradient(145deg,#1749FF 0%,#4A6FFF 55%,#1749FF 100%)',
+    photo: '',
+    isAgent: false,
+    isValue: true,    // ← Best Value badge
+    hasBreakfast: false,
+    price: 0,
+    priceWas: 0,
+    disc: 0,
+    highlights: ['Highlight 1', 'Highlight 2', 'Highlight 3'],
+    amenities: ['Amenity 1', 'Amenity 2', 'Amenity 3', 'Amenity 4'],
+    rooms: [
+      { n: 'Standard Room', beds: '1 King Bed', sleeps: 2, price: 0, was: 0, total: 0, disc: 0, refund: true, soldOut: false },
+    ],
+    reviews_list: [
+      { name: 'Guest Name', score: 10, text: 'Review text.', date: 'Month Year' },
+    ],
+    checkin:  'Check-in time',
+    checkout: 'Checkout time',
+    pets:     'Pet policy',
+    parking:  'Parking info',
+    deposit:  null,
+    notes:    '',
+    agentNote: 'Why this is the best value option.',
+  },
+
+  // ────────────────────────────────────────────
+  // HOTEL 3 — OPTION 3
+  // ────────────────────────────────────────────
+  {
+    id: 3,
+    type: 'hotel',
+    name: 'Hotel Name Here',
+    loc:  'Neighborhood, City',
+    stars: 4,
+    score: 8.1,
+    scoreWord: 'Very Good',
+    reviews: 650,
+    cats: { Cleanliness: 8.2, Location: 8.5, Service: 8.0 },
+    addr: 'Full street address',
+    near: 'Nearby landmarks',
+    gradient: 'linear-gradient(145deg,#1749FF 0%,#4A6FFF 55%,#1749FF 100%)',
+    photo: '',
+    isAgent: false,
+    isValue: false,
+    hasBreakfast: false,
+    price: 0,
+    priceWas: 0,
+    disc: 0,
+    highlights: ['Highlight 1', 'Highlight 2', 'Highlight 3'],
+    amenities: ['Amenity 1', 'Amenity 2', 'Amenity 3', 'Amenity 4'],
+    rooms: [
+      { n: 'Standard Room', beds: '1 King Bed', sleeps: 2, price: 0, was: 0, total: 0, disc: 0, refund: true, soldOut: false },
+    ],
+    reviews_list: [
+      { name: 'Guest Name', score: 9, text: 'Review text.', date: 'Month Year' },
+    ],
+    checkin:  'Check-in time',
+    checkout: 'Checkout time',
+    pets:     'Pet policy',
+    parking:  'Parking info',
+    deposit:  null,
+    notes:    '',
+    agentNote: 'Notes about this option.',
+  },
+
+  // ────────────────────────────────────────────
+  // ACTIVITY 1
+  // ────────────────────────────────────────────
+  {
+    id: 4,
+    type: 'activity',
+    name: 'Activity Name Here',
+    loc:  'Location / Neighborhood',
+    gradient: 'linear-gradient(145deg,#1749FF 0%,#4A6FFF 100%)',
+    photo: '',          // ← paste photo URL
+    isAgent: true,      // highlight as agent's pick
+    isValue: false,
+    price: 0,           // price per person
+    priceLabel: 'per person',
+    duration: '2–3 hours',
+    groupSize: 'Up to 20 people',
+    includes: [
+      'What's included 1',
+      'What's included 2',
+      'What's included 3',
+    ],
+    desc: 'Full description of the activity. What they'll do, why it's great, what to expect.',
+    highlights: ['Key point 1', 'Key point 2', 'Key point 3'],
+    bookingLink: '',    // ← link to booking page
+    agentNote: 'Why you recommend this activity for this client.',
+  },
+
+  // ────────────────────────────────────────────
+  // ACTIVITY 2
+  // ────────────────────────────────────────────
+  {
+    id: 5,
+    type: 'activity',
+    name: 'Activity Name Here',
+    loc:  'Location / Neighborhood',
+    gradient: 'linear-gradient(145deg,#1749FF 0%,#4A6FFF 100%)',
+    photo: '',
+    isAgent: false,
+    isValue: true,
+    price: 0,
+    priceLabel: 'per person',
+    duration: '1–2 hours',
+    groupSize: 'Private or group',
+    includes: ['Included item 1', 'Included item 2'],
+    desc: 'Description of this activity.',
+    highlights: ['Key point 1', 'Key point 2'],
+    bookingLink: '',
+    agentNote: 'Why this activity is a great fit.',
+  },
+
+  // ────────────────────────────────────────────
+  // DINING 1
+  // ────────────────────────────────────────────
+  {
+    id: 6,
+    type: 'dining',
+    name: 'Restaurant Name Here',
+    loc:  'Neighborhood, City',
+    cuisine: 'Cuisine Type',
+    priceRange: '$$$$',   // $, $$, $$$, or $$$$
+    gradient: 'linear-gradient(145deg,#1749FF 0%,#4A6FFF 100%)',
+    photo: '',
+    isAgent: true,
+    isValue: false,
+    score: 9.2,
+    scoreWord: 'Outstanding',
+    reviews: 480,
+    desc: 'Description of the restaurant — vibe, what to order, why it's worth it.',
+    highlights: ['Must-try dish 1', 'Must-try dish 2', 'Award or accolade'],
+    hours: 'Mon–Fri 11am–10pm · Sat–Sun 10am–11pm',
+    reservations: 'Required · Book via OpenTable',
+    reservationLink: '',
+    dresscode: 'Smart casual',
+    dietary: 'Vegetarian options available',
+    agentNote: 'Why this restaurant is perfect for this trip.',
+  },
+
+  // ────────────────────────────────────────────
+  // DINING 2
+  // ────────────────────────────────────────────
+  {
+    id: 7,
+    type: 'dining',
+    name: 'Restaurant Name Here',
+    loc:  'Neighborhood, City',
+    cuisine: 'Cuisine Type',
+    priceRange: '$$$',
+    gradient: 'linear-gradient(145deg,#1749FF 0%,#4A6FFF 100%)',
+    photo: '',
+    isAgent: false,
+    isValue: true,
+    score: 8.8,
+    scoreWord: 'Excellent',
+    reviews: 310,
+    desc: 'Description of this restaurant.',
+    highlights: ['Highlight 1', 'Highlight 2'],
+    hours: 'Daily 12pm–11pm',
+    reservations: 'Walk-in friendly',
+    reservationLink: '',
+    dresscode: 'Casual',
+    dietary: '',
+    agentNote: '',
+  },
+
+  // ────────────────────────────────────────────
+  // DINING 3
+  // ────────────────────────────────────────────
+  {
+    id: 8,
+    type: 'dining',
+    name: 'Restaurant Name Here',
+    loc:  'Neighborhood, City',
+    cuisine: 'Cuisine Type',
+    priceRange: '$$',
+    gradient: 'linear-gradient(145deg,#1749FF 0%,#4A6FFF 100%)',
+    photo: '',
+    isAgent: false,
+    isValue: false,
+    score: 8.5,
+    scoreWord: 'Excellent',
+    reviews: 220,
+    desc: 'Description of this restaurant.',
+    highlights: ['Highlight 1', 'Highlight 2'],
+    hours: 'Tue–Sun 5pm–10pm',
+    reservations: 'Recommended',
+    reservationLink: '',
+    dresscode: 'Casual',
+    dietary: '',
+    agentNote: '',
+  },
+
+  // ────────────────────────────────────────────
+  // FLIGHT — delete this block if not offering flights
+  // ────────────────────────────────────────────
+  // {
+  //   id: 9,
+  //   type: 'flight',
+  //   name: 'Airline · Flight Number',     // e.g. "Delta · DL 408"
+  //   loc:  'LAS → JFK',                  // route
+  //   gradient: 'linear-gradient(145deg,#1A2A5C 0%,#090F26 100%)',
+  //   photo: '',
+  //   isAgent: true,
+  //   isValue: false,
+  //   price: 0,                            // per person
+  //   priceLabel: 'per person',
+  //   cabin: 'Economy',                    // Economy / Business / First
+  //   departs: 'May 8 · 7:00 AM',
+  //   arrives: 'May 8 · 3:45 PM',
+  //   duration: '4h 45m',
+  //   stops: 'Nonstop',
+  //   baggage: '1 carry-on included · Checked bag $35',
+  //   bookingLink: '',
+  //   agentNote: 'Best price/timing combo for your dates.',
+  // },
+
+  // ────────────────────────────────────────────
+  // CAR RENTAL — delete this block if not offering cars
+  // ────────────────────────────────────────────
+  // {
+  //   id: 10,
+  //   type: 'car',
+  //   name: 'Car Class / Model',           // e.g. "Full-Size SUV — Ford Explorer"
+  //   loc:  'Pickup Location',             // e.g. "LAS Airport"
+  //   gradient: 'linear-gradient(145deg,#3A2A10 0%,#1E1508 100%)',
+  //   photo: '',
+  //   isAgent: false,
+  //   isValue: true,
+  //   price: 0,                            // per day
+  //   priceLabel: 'per day',
+  //   company: 'Enterprise',               // rental company
+  //   pickup: 'May 8 · 4:00 PM · LAS Airport',
+  //   dropoff: 'May 11 · 11:00 AM · LAS Airport',
+  //   totalDays: 3,
+  //   seats: 5,
+  //   transmission: 'Automatic',
+  //   mileage: 'Unlimited',
+  //   cancellation: 'Free cancellation',
+  //   includes: ['Unlimited miles', 'Basic insurance', 'GPS available'],
+  //   bookingLink: '',
+  //   agentNote: '',
+  // },
+
+  // ────────────────────────────────────────────
+  // TRANSFER — delete this block if not offering transfers
+  // ────────────────────────────────────────────
+  // {
+  //   id: 11,
+  //   type: 'transfer',
+  //   name: 'Transfer Type',               // e.g. "Private Airport Transfer"
+  //   loc:  'LAS Airport → Hotel',
+  //   gradient: 'linear-gradient(145deg,#2A2A2A 0%,#101010 100%)',
+  //   photo: '',
+  //   isAgent: false,
+  //   isValue: false,
+  //   price: 0,                            // total price
+  //   priceLabel: 'flat rate',
+  //   vehicleType: 'Private SUV',
+  //   pickupTime: 'Flexible — meets your flight',
+  //   duration: '~25 min',
+  //   passengers: 'Up to 6',
+  //   includes: ['Meet & greet', 'Luggage assistance', 'Flight tracking'],
+  //   bookingLink: '',
+  //   agentNote: '',
+  // },
+
+  // ────────────────────────────────────────────
+  // CRUISE — delete this block if not offering cruises
+  // ────────────────────────────────────────────
+  // {
+  //   id: 12,
+  //   type: 'cruise',
+  //   name: 'Ship Name · Cruise Line',     // e.g. "Wonder of the Seas · Royal Caribbean"
+  //   loc:  'Miami → Cozumel → Nassau',
+  //   gradient: 'linear-gradient(145deg,#003C5A 0%,#001C2C 100%)',
+  //   photo: '',
+  //   isAgent: true,
+  //   isValue: false,
+  //   price: 0,                            // per person
+  //   priceLabel: 'per person',
+  //   line: 'Royal Caribbean',
+  //   ship: 'Wonder of the Seas',
+  //   departure: 'May 8 · Miami, FL',
+  //   duration: '7 nights',
+  //   ports: ['Miami', 'Cozumel, Mexico', 'Nassau, Bahamas'],
+  //   cabinType: 'Balcony Cabin',
+  //   includes: ['All meals onboard', 'Entertainment', 'Port fees'],
+  //   excludes: ['Beverages', 'Shore excursions', 'Gratuities'],
+  //   bookingLink: '',
+  //   agentNote: '',
+  // },
+
+  // ────────────────────────────────────────────
+  // THEME PARK — delete this block if not offering parks
+  // ────────────────────────────────────────────
+  // {
+  //   id: 13,
+  //   type: 'park',
+  //   name: 'Park Name',                   // e.g. "Magic Kingdom · Disney World"
+  //   loc:  'Orlando, FL',
+  //   gradient: 'linear-gradient(145deg,#780A0A 0%,#3A0505 100%)',
+  //   photo: '',
+  //   isAgent: true,
+  //   isValue: false,
+  //   price: 0,                            // per person per day
+  //   priceLabel: 'per person / day',
+  //   parkSystem: 'Disney World',          // Disney / Universal / SeaWorld / LEGOLAND
+  //   ticketType: '1-Day Park Ticket',
+  //   date: 'May 9, 2026',
+  //   includes: ['Park admission', 'All rides & attractions'],
+  //   addOns: ['Lightning Lane $25/person', 'Dining plan available'],
+  //   bookingLink: '',
+  //   agentNote: '',
+  // },
+
+];
+
+// ═══════════════════════════════════════════════
+// CLIENT CONFIG — fill in per proposal
+// ═══════════════════════════════════════════════
+const CLIENT_INFO = {
+  name:         '<!-- CLIENT NAME -->',
+  email:        '<!-- CLIENT EMAIL -->',
+  phone:        '<!-- CLIENT PHONE -->',
+  tripName:     '<!-- TRIP NAME -->',
+  dates:        '<!-- DATE RANGE -->',
+  travelers:    '<!-- # -->',
+  formspreeId:  'xgoprooy',        // ← emails nathanlane.travel@gmail.com
+  zapierWebhook:'https://hook.us2.make.com/b75sim9g5mdz1xo8gos2k63dg8x288uk',
+};
+
+// ═══════════════════════════════════════════════
+// EVERYTHING BELOW IS AUTOMATIC — DON'T EDIT
+// ═══════════════════════════════════════════════
+
+// All possible service types — order controls display order
+const TYPE_CONFIG = [
+  { key: 'hotel',    emoji: '🏨', label: 'Hotels',       plural: 'hotels' },
+  { key: 'flight',   emoji: '✈️',  label: 'Flights',      plural: 'flights' },
+  { key: 'car',      emoji: '🚗',  label: 'Car Rental',   plural: 'car rentals' },
+  { key: 'transfer', emoji: '🚌',  label: 'Transfers',    plural: 'transfers' },
+  { key: 'activity', emoji: '🎭',  label: 'Activities',   plural: 'activities' },
+  { key: 'dining',   emoji: '🍽',  label: 'Dining',       plural: 'dining options' },
+  { key: 'cruise',   emoji: '🚢',  label: 'Cruises',      plural: 'cruises' },
+  { key: 'park',     emoji: '🎢',  label: 'Theme Parks',  plural: 'parks' },
+];
+
+// Viator destination search URL — update the destination slug as needed
+// e.g. for Las Vegas: https://www.viator.com/Las-Vegas/d684-ttd
+const VIATOR_URL = '<!-- VIATOR_DESTINATION_URL e.g. https://www.viator.com/Las-Vegas/d684-ttd -->';
+
+let currentFilter = 'all';
+let shortlist = new Set();
+let panelOpen = false;
+let shortlistOpen = false;
+
+// ── BUILD FILTERS DYNAMICALLY ──
+function buildFilters() {
+  const typesInData = new Set(DATA.map(d => d.type));
+  const hasAgentPicks = DATA.some(d => d.isAgent);
+  const hasValue      = DATA.some(d => d.isValue);
+
+  let html = `<button class="filter-btn active" onclick="setFilter('all',this)">All Options</button>`;
+
+  TYPE_CONFIG.forEach(t => {
+    if (t.key === 'activity') {
+      // Activities tab always shown — links to Viator if none in DATA
+      if (typesInData.has('activity')) {
+        html += `<button class="filter-btn" onclick="setFilter('activity',this)">${t.emoji} ${t.label}</button>`;
+      } else {
+        html += `<button class="filter-btn viator-tab" onclick="window.open('${VIATOR_URL}','_blank')">${t.emoji} Browse Activities ↗</button>`;
+      }
+    } else if (typesInData.has(t.key)) {
+      html += `<button class="filter-btn" onclick="setFilter('${t.key}',this)">${t.emoji} ${t.label}</button>`;
+    }
+  });
+
+  if (hasAgentPicks) html += `<button class="filter-btn" onclick="setFilter('agent',this)">⚑ Nate's Picks</button>`;
+  if (hasValue)      html += `<button class="filter-btn" onclick="setFilter('value',this)">💰 Best Value</button>`;
+
+  document.getElementById('filtersRow').innerHTML = html;
+}
+
+// ── RENDER CARDS ──
+function renderCards() {
+  const grid = document.getElementById('cardsGrid');
+  let filtered = DATA.filter(d => {
+    if (currentFilter === 'all')   return true;
+    if (currentFilter === 'agent') return d.isAgent;
+    if (currentFilter === 'value') return d.isValue;
+    return d.type === currentFilter;
+  });
+
+  // Update hero stat count
+  const counts = {};
+  DATA.forEach(d => counts[d.type] = (counts[d.type]||0)+1);
+  const parts = [];
+  TYPE_CONFIG.forEach(t => {
+    if (counts[t.key]) parts.push(`${counts[t.key]} ${counts[t.key]===1 ? t.label.toLowerCase().replace(/s$/,'') : t.plural}`);
+  });
+  document.getElementById('statCount').textContent = parts.join(' · ') || 'Options curated by Nate';
+
+  let html = '';
+
+  if (currentFilter === 'all') {
+    // Render each type group in order
+    TYPE_CONFIG.forEach(t => {
+      const group = filtered.filter(d => d.type === t.key);
+      if (!group.length) return;
+      html += `<div class="grid-section-header"><span class="gsh-label">${t.emoji} ${t.label}</span><div class="gsh-line"></div></div>`;
+      group.forEach((d,i) => html += cardHTML(d, i));
+      // Always append Viator card after activities section
+      if (t.key === 'activity') html += viatorCardHTML(group.length);
+    });
+    // If no activities in DATA at all, show viator card in activities section
+    if (!DATA.some(d => d.type === 'activity')) {
+      html += `<div class="grid-section-header"><span class="gsh-label">🎭 Activities</span><div class="gsh-line"></div></div>`;
+      html += viatorCardHTML(0);
+    }
+  } else if (currentFilter === 'activity') {
+    filtered.forEach((d,i) => html += cardHTML(d,i));
+    html += viatorCardHTML(filtered.length);
+  } else {
+    if (!filtered.length) {
+      html = '<div class="empty"><h3>Nothing here</h3><p>No options in this category yet.</p></div>';
+    } else {
+      filtered.forEach((d,i) => html += cardHTML(d,i));
+    }
+  }
+
+  grid.innerHTML = html || '<div class="empty"><h3>Nothing here yet</h3><p>Try a different filter</p></div>';
+}
+
+// ── VIATOR CARD ──
+function viatorCardHTML(offset) {
+  return `
+    <a class="viator-card" href="${VIATOR_URL}" target="_blank" style="animation-delay:${offset*0.06}s">
+      <div class="viator-icon">🗺️</div>
+      <div class="viator-title">Browse All Activities</div>
+      <div class="viator-sub">Explore hundreds of tours, experiences, and add-ons for your trip — powered by Viator. Add anything you love and let Nate know.</div>
+      <span class="viator-btn">Browse on Viator ↗</span>
+    </a>`;
+}
+
+function cardHTML(d, i) {
+  const saved    = shortlist.has(d.id);
+  const imgStyle = d.photo
+    ? `<img class="card-img-photo" src="${d.photo}" alt="${d.name}" loading="lazy"><div class="card-img-overlay"></div>`
+    : `<div class="card-img-bg" style="background:${d.gradient};position:absolute;inset:0;"></div><div class="card-img-overlay"></div>`;
+  const letter = d.name[0];
+
+  let badges = '';
+  if (d.isAgent) badges += `<span class="badge badge-agent">⚑ Nate's Pick</span>`;
+  if (d.isValue) badges += `<span class="badge badge-value">Best Value</span>`;
+  if (!d.isAgent && !d.isValue) {
+    const typeBadge = { dining: d.priceRange, flight: d.cabin||'Flight', car: d.company||'Car Rental', transfer: 'Transfer', cruise: d.line||'Cruise', park: d.parkSystem||'Theme Park' };
+    if (typeBadge[d.type]) badges += `<span class="badge badge-${d.type}">${typeBadge[d.type]}</span>`;
+  }
+
+  // Stars for hotels
+  let starsHTML = '';
+  if (d.stars) {
+    const full = Math.floor(d.stars), half = d.stars % 1 >= 0.5;
+    starsHTML = '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(5 - Math.ceil(d.stars));
+  }
+
+  // Card tag line
+  const tagLabels = {
+    hotel:    `${starsHTML} · Hotel`,
+    flight:   `✈️ ${d.departs||'Flight'}`,
+    car:      `🚗 ${d.company||'Car Rental'}`,
+    transfer: `🚌 Transfer · ${d.vehicleType||''}`,
+    activity: `🎭 Activity`,
+    dining:   `${d.cuisine||''} · Dining`,
+    cruise:   `🚢 ${d.line||'Cruise'}`,
+    park:     `🎢 ${d.parkSystem||'Theme Park'}`,
+  };
+  const tagLabel = tagLabels[d.type] || d.type;
+
+  // Chips
+  let chips = '';
+  if (d.type === 'hotel') {
+    if (d.hasBreakfast) chips += `<span class="chip gold">Breakfast incl.</span>`;
+    (d.highlights||[]).slice(0,2).forEach(h => chips += `<span class="chip">${h}</span>`);
+  } else if (d.type === 'flight') {
+    if (d.stops) chips += `<span class="chip ${d.stops==='Nonstop'?'green':''}">${d.stops}</span>`;
+    if (d.cabin) chips += `<span class="chip">${d.cabin}</span>`;
+    if (d.duration) chips += `<span class="chip">${d.duration}</span>`;
+  } else if (d.type === 'car') {
+    if (d.seats)        chips += `<span class="chip">${d.seats} seats</span>`;
+    if (d.transmission) chips += `<span class="chip">${d.transmission}</span>`;
+    if (d.mileage)      chips += `<span class="chip">${d.mileage}</span>`;
+  } else if (d.type === 'transfer') {
+    if (d.vehicleType) chips += `<span class="chip">${d.vehicleType}</span>`;
+    if (d.passengers)  chips += `<span class="chip">${d.passengers}</span>`;
+    if (d.duration)    chips += `<span class="chip">${d.duration}</span>`;
+  } else if (d.type === 'activity') {
+    if (d.duration)   chips += `<span class="chip">${d.duration}</span>`;
+    if (d.groupSize)  chips += `<span class="chip">${d.groupSize}</span>`;
+  } else if (d.type === 'dining') {
+    (d.highlights||[]).slice(0,1).forEach(h => chips += `<span class="chip gold">${h}</span>`);
+    (d.highlights||[]).slice(1,2).forEach(h => chips += `<span class="chip">${h}</span>`);
+  } else if (d.type === 'cruise') {
+    if (d.duration)   chips += `<span class="chip">${d.duration}</span>`;
+    if (d.cabinType)  chips += `<span class="chip">${d.cabinType}</span>`;
+  } else if (d.type === 'park') {
+    if (d.ticketType) chips += `<span class="chip">${d.ticketType}</span>`;
+    if (d.date)       chips += `<span class="chip">${d.date}</span>`;
+  }
+
+  // Price/score footer
+  let footerHTML = '';
+  const priceBlock = (label, price, priceWas, disc) => `
+    <div class="price-block">
+      <div class="price-label">${label}</div>
+      ${priceWas ? `<div class="price-was">$${priceWas}</div>` : ''}
+      <div class="price-main">
+        <span class="price-num">$${price}</span>
+        ${disc ? `<span class="price-off">-${disc}%</span>` : ''}
+      </div>
+    </div>`;
+  const scoreBlock = (score, word, reviews) => score ? `
+    <div class="score-block">
+      <div class="score-num">${score}</div>
+      <div class="score-label">${word||''}</div>
+      ${reviews ? `<div class="score-reviews">${reviews.toLocaleString ? reviews.toLocaleString() : reviews} reviews</div>` : ''}
+    </div>` : '';
+
+  if (d.type === 'hotel') {
+    footerHTML = priceBlock('From per night', d.price, d.priceWas, d.disc) + scoreBlock(d.score, d.scoreWord, d.reviews);
+  } else if (d.type === 'flight') {
+    footerHTML = priceBlock(d.priceLabel||'per person', d.price, 0, 0) + `<div class="score-block"><div class="score-label">${d.departs||''}</div><div class="score-reviews">${d.arrives||''}</div></div>`;
+  } else if (d.type === 'car') {
+    footerHTML = priceBlock(d.priceLabel||'per day', d.price, 0, 0) + `<div class="score-block"><div class="score-label">${d.totalDays||''} days</div><div class="score-reviews">${d.cancellation||''}</div></div>`;
+  } else if (d.type === 'transfer') {
+    footerHTML = priceBlock(d.priceLabel||'flat rate', d.price, 0, 0) + `<div class="score-block"><div class="score-label">${d.duration||''}</div></div>`;
+  } else if (d.type === 'activity') {
+    footerHTML = priceBlock(d.priceLabel||'per person', d.price, 0, 0) + `<div class="score-block"><div class="score-label">${d.duration||''}</div></div>`;
+  } else if (d.type === 'dining') {
+    footerHTML = `<div class="price-block"><div class="price-label">Price range</div><div class="price-main"><span class="price-num" style="font-size:22px;letter-spacing:2px;">${d.priceRange}</span></div></div>` + scoreBlock(d.score, d.scoreWord, d.reviews);
+  } else if (d.type === 'cruise') {
+    footerHTML = priceBlock(d.priceLabel||'per person', d.price, 0, 0) + `<div class="score-block"><div class="score-label">${d.duration||''}</div></div>`;
+  } else if (d.type === 'park') {
+    footerHTML = priceBlock(d.priceLabel||'per person/day', d.price, 0, 0) + `<div class="score-block"><div class="score-label">${d.ticketType||''}</div></div>`;
+  }
+
+  return `
+    <div class="card" onclick="openPanel(${d.id})" style="animation-delay:${i*0.06}s">
+      <div class="card-img">
+        ${imgStyle}
+        <div class="card-img-letter">${letter}</div>
+        <div class="card-badges">${badges}</div>
+        <button class="heart-btn ${saved?'saved':''}" onclick="toggleSave(event,${d.id})" aria-label="Save">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="${saved?'white':'none'}" stroke="${saved?'white':'currentColor'}" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">${tagLabel}</div>
+        <div class="card-name">${d.name}</div>
+        <div class="card-loc">📍 ${d.loc}</div>
+        <div class="card-chips">${chips}</div>
+        <div class="card-foot">${footerHTML}</div>
+      </div>
+    </div>`;
+}
+
+// ── FILTER ──
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards();
+}
+
+// ── PANEL ──
+function openPanel(id) {
+  const d = DATA.find(x => x.id === id);
+  if (!d) return;
+  const saved = shortlist.has(id);
+
+  const imgSection = d.photo
+    ? `<img class="panel-hero-photo" src="${d.photo}" alt="${d.name}">`
+    : `<div style="position:absolute;inset:0;background:${d.gradient}"></div>`;
+
+  let panelContent = '';
+  if (d.type === 'hotel')    panelContent = hotelPanel(d, saved);
+  if (d.type === 'activity') panelContent = activityPanel(d, saved);
+  if (d.type === 'dining')   panelContent = diningPanel(d, saved);
+  if (d.type === 'flight')   panelContent = flightPanel(d, saved);
+  if (d.type === 'car')      panelContent = carPanel(d, saved);
+  if (d.type === 'transfer') panelContent = transferPanel(d, saved);
+  if (d.type === 'cruise')   panelContent = cruisePanel(d, saved);
+  if (d.type === 'park')     panelContent = parkPanel(d, saved);
+
+  document.getElementById('panelInner').innerHTML = `
+    <div class="panel-hero">
+      ${imgSection}
+      <div class="panel-hero-overlay"></div>
+      <div class="panel-hero-letter">${d.name[0]}</div>
+      <button class="panel-close" onclick="closePanel()">✕</button>
+      ${d.isAgent ? '<div class="panel-agent-badge">⚑ Agent\'s Pick</div>' : ''}
+    </div>
+    <div class="panel-body">${panelContent}</div>`;
+
+  document.getElementById('panel').classList.add('on');
+  document.getElementById('overlay').classList.add('on');
+  panelOpen = true;
+  document.body.style.overflow = 'hidden';
+}
+
+function hotelPanel(d, saved) {
+  const cats = d.cats || {};
+  const catHTML = Object.entries(cats).map(([k,v]) =>
+    `<div class="score-cat"><div class="score-cat-num">${v}</div><div class="score-cat-name">${k}</div></div>`
+  ).join('');
+
+  const roomsHTML = (d.rooms||[]).map(r => {
+    if (r.soldOut) return `
+      <div class="room sold">
+        <div class="room-name">${r.n} <span style="font-size:11px;color:var(--muted)">(Sold out)</span></div>
+        <div class="room-meta"><span>🛏 ${r.beds}</span><span>👥 Sleeps ${r.sleeps}</span></div>
+      </div>`;
+    return `
+      <div class="room avail">
+        <div class="room-name">${r.n} ${r.left ? `<span class="room-left-tag">Only ${r.left} left</span>` : ''}</div>
+        <div class="room-meta">
+          <span>🛏 ${r.beds}</span><span>👥 Sleeps ${r.sleeps}</span>
+          ${r.view ? `<span>🪟 ${r.view}</span>` : ''}
+          ${r.size ? `<span>📐 ${r.size}</span>` : ''}
+        </div>
+        <div class="room-foot">
+          <div>
+            ${r.was ? `<div class="room-was">$${r.was}/night</div>` : ''}
+            <div style="display:flex;align-items:baseline;gap:6px">
+              <div class="room-price">$${r.price}<span style="font-size:13px;font-weight:500;color:var(--muted)">/night</span></div>
+              ${r.disc ? `<span class="room-disc">-${r.disc}%</span>` : ''}
+            </div>
+            ${r.total ? `<div class="room-total">$${r.total} total for stay</div>` : ''}
+          </div>
+          <div class="room-right">
+            ${r.refund ? '<span class="policy-chip chip-green">Free cancellation</span>' : '<span class="policy-chip chip-orange">Non-refundable</span>'}
+            <button class="reserve-btn" onclick="selectRoom(${d.id},'${r.n}',${r.price})">Select</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  const amenHTML = (d.amenities||[]).map(a => `<div class="amenity"><div class="amenity-dot"></div>${a}</div>`).join('');
+  const revHTML  = (d.reviews_list||[]).map(r => `
+    <div class="review">
+      <div class="review-head"><span class="review-name">${r.name}</span><span class="review-score">${r.score}</span></div>
+      <div class="review-text">"${r.text}"</div>
+      <div class="review-date">${r.date}</div>
+    </div>`).join('');
+
+  return `
+    <div class="panel-eyebrow">Hotel · ${d.stars}★ · ${d.scoreWord}</div>
+    <div class="panel-title">${d.name}</div>
+    <div class="panel-addr">📍 ${d.addr}</div>
+    ${d.near ? `<div class="panel-near">📍 ${d.near}</div>` : ''}
+    ${d.score ? `
+    <div class="score-row">
+      <div class="score-main">
+        <div class="score-big">${d.score}</div>
+        <div class="score-word">${d.scoreWord}</div>
+        <div class="score-rev">${d.reviews?.toLocaleString()} reviews</div>
+      </div>
+      <div class="score-cats">${catHTML}</div>
+    </div>` : ''}
+    ${d.agentNote ? `
+    <div class="agent-note-panel">
+      <div class="aa">Nate</div>
+      <p><strong>Nate's note:</strong> ${d.agentNote}</p>
+    </div>` : ''}
+    <div class="section-t">Amenities</div>
+    <div class="amenities-list">${amenHTML}</div>
+    ${d.notes ? `<div class="info-note">ℹ️ ${d.notes}</div>` : ''}
+    <div class="section-t">Room Options</div>
+    <div class="rooms-list">${roomsHTML}</div>
+    ${revHTML ? `<div class="section-t">Guest Reviews</div><div class="reviews-list">${revHTML}</div>` : ''}
+    <div class="section-t">Policies</div>
+    <div class="policies-grid">
+      <div class="policy-block"><div class="policy-title">Check-In</div><div class="policy-val">${d.checkin||'—'}</div></div>
+      <div class="policy-block"><div class="policy-title">Check-Out</div><div class="policy-val">${d.checkout||'—'}</div></div>
+      <div class="policy-block"><div class="policy-title">Pets</div><div class="policy-val">${d.pets||'—'}</div></div>
+      <div class="policy-block"><div class="policy-title">Parking</div><div class="policy-val">${d.parking||'—'}</div></div>
+      ${d.deposit ? `<div class="policy-block policy-full"><div class="policy-title">Deposit</div><div class="policy-val">${d.deposit}</div></div>` : ''}
+    </div>
+    <button class="save-panel-btn ${saved?'saved-state':'unsaved'}" id="savePanelBtn" onclick="toggleSavePanel(${d.id})">
+      ${saved ? '♥ Saved to My Picks' : '♡ Save to My Picks'}
+    </button>`;
+}
+
+function activityPanel(d, saved) {
+  const inclHTML = (d.includes||[]).map(i => `<div class="includes-item"><div class="inc-dot"></div>${i}</div>`).join('');
+  return `
+    <div class="panel-eyebrow">Activity${d.duration ? ' · '+d.duration : ''}</div>
+    <div class="panel-title">${d.name}</div>
+    <div class="panel-addr">📍 ${d.loc}</div>
+    ${d.agentNote ? `
+    <div class="agent-note-panel" style="margin-top:16px">
+      <div class="aa">Nate</div>
+      <p><strong>Nate's note:</strong> ${d.agentNote}</p>
+    </div>` : ''}
+    ${d.desc ? `<div class="detail-desc" style="margin-top:16px">${d.desc}</div>` : ''}
+    <div class="detail-meta-grid">
+      <div class="detail-meta-cell"><label>Price</label><span>$${d.price} ${d.priceLabel||'per person'}</span></div>
+      ${d.duration ? `<div class="detail-meta-cell"><label>Duration</label><span>${d.duration}</span></div>` : ''}
+      ${d.groupSize ? `<div class="detail-meta-cell"><label>Group Size</label><span>${d.groupSize}</span></div>` : ''}
+    </div>
+    ${inclHTML ? `<div class="section-t">What's Included</div><div class="includes-list">${inclHTML}</div>` : ''}
+    ${d.bookingLink ? `<a href="${d.bookingLink}" target="_blank" style="display:block;margin-top:20px;text-align:center;background:var(--brand);color:white;padding:14px;border-radius:var(--radius-sm);font-weight:700;text-decoration:none;font-family:'Outfit',sans-serif;font-size:14px;">View & Book Activity →</a>` : ''}
+    <button class="save-panel-btn ${saved?'saved-state':'unsaved'}" id="savePanelBtn" onclick="toggleSavePanel(${d.id})">
+      ${saved ? '♥ Saved to My Picks' : '♡ Save to My Picks'}
+    </button>`;
+}
+
+function diningPanel(d, saved) {
+  return `
+    <div class="panel-eyebrow">${d.cuisine} · ${d.priceRange}</div>
+    <div class="panel-title">${d.name}</div>
+    <div class="panel-addr">📍 ${d.loc}</div>
+    ${d.score ? `
+    <div class="score-row" style="margin-top:16px">
+      <div class="score-main">
+        <div class="score-big">${d.score}</div>
+        <div class="score-word">${d.scoreWord||''}</div>
+        <div class="score-rev">${d.reviews||''} reviews</div>
+      </div>
+    </div>` : ''}
+    ${d.agentNote ? `
+    <div class="agent-note-panel">
+      <div class="aa">Nate</div>
+      <p><strong>Nate's note:</strong> ${d.agentNote}</p>
+    </div>` : ''}
+    ${d.desc ? `<div class="detail-desc">${d.desc}</div>` : ''}
+    ${d.highlights && d.highlights.length ? `
+    <div class="section-t">Must-Try</div>
+    <div class="includes-list">${d.highlights.map(h=>`<div class="includes-item"><div class="inc-dot"></div>${h}</div>`).join('')}</div>` : ''}
+    <div class="section-t">Details</div>
+    <div class="detail-meta-grid">
+      ${d.hours ? `<div class="detail-meta-cell"><label>Hours</label><span>${d.hours}</span></div>` : ''}
+      ${d.reservations ? `<div class="detail-meta-cell"><label>Reservations</label><span>${d.reservations}</span></div>` : ''}
+      ${d.dresscode ? `<div class="detail-meta-cell"><label>Dress Code</label><span>${d.dresscode}</span></div>` : ''}
+      ${d.dietary ? `<div class="detail-meta-cell"><label>Dietary</label><span>${d.dietary}</span></div>` : ''}
+    </div>
+    ${d.reservationLink ? `<a href="${d.reservationLink}" target="_blank" style="display:block;margin-top:16px;text-align:center;background:var(--brand);color:white;padding:14px;border-radius:var(--radius-sm);font-weight:700;text-decoration:none;font-family:'Outfit',sans-serif;font-size:14px;">Make a Reservation →</a>` : ''}
+    <button class="save-panel-btn ${saved?'saved-state':'unsaved'}" id="savePanelBtn" onclick="toggleSavePanel(${d.id})">
+      ${saved ? '♥ Saved to My Picks' : '♡ Save to My Picks'}
+    </button>`;
+}
+
+function flightPanel(d, saved) {
+  const inclHTML = (d.includes||[]).map(i=>`<div class="includes-item"><div class="inc-dot"></div>${i}</div>`).join('');
+  return `
+    <div class="panel-eyebrow">✈️ Flight · ${d.cabin||''}</div>
+    <div class="panel-title">${d.name}</div>
+    <div class="panel-addr">🛫 ${d.loc}</div>
+    ${d.agentNote?`<div class="agent-note-panel" style="margin-top:16px"><div class="aa">Nate</div><p><strong>Nate's note:</strong> ${d.agentNote}</p></div>`:''}
+    <div class="section-t">Flight Details</div>
+    <div class="detail-meta-grid">
+      ${d.departs?`<div class="detail-meta-cell"><label>Departs</label><span>${d.departs}</span></div>`:''}
+      ${d.arrives?`<div class="detail-meta-cell"><label>Arrives</label><span>${d.arrives}</span></div>`:''}
+      ${d.duration?`<div class="detail-meta-cell"><label>Duration</label><span>${d.duration}</span></div>`:''}
+      ${d.stops?`<div class="detail-meta-cell"><label>Stops</label><span>${d.stops}</span></div>`:''}
+      ${d.cabin?`<div class="detail-meta-cell"><label>Cabin</label><span>${d.cabin}</span></div>`:''}
+      ${d.baggage?`<div class="detail-meta-cell"><label>Baggage</label><span>${d.baggage}</span></div>`:''}
+    </div>
+    ${inclHTML?`<div class="section-t">Included</div><div class="includes-list">${inclHTML}</div>`:''}
+    <div class="section-t">Price</div>
+    <div class="detail-meta-grid">
+      <div class="detail-meta-cell"><label>${d.priceLabel||'Per Person'}</label><span>$${d.price}</span></div>
+    </div>
+    ${d.bookingLink?`<a href="${d.bookingLink}" target="_blank" style="display:block;margin-top:16px;text-align:center;background:var(--brand);color:white;padding:14px;border-radius:var(--radius-sm);font-weight:700;text-decoration:none;font-family:'Outfit',sans-serif;font-size:14px;">View Flight →</a>`:''}
+    <button class="save-panel-btn ${saved?'saved-state':'unsaved'}" id="savePanelBtn" onclick="toggleSavePanel(${d.id})">${saved?'♥ Saved to My Picks':'♡ Save to My Picks'}</button>`;
+}
+
+function carPanel(d, saved) {
+  const inclHTML = (d.includes||[]).map(i=>`<div class="includes-item"><div class="inc-dot"></div>${i}</div>`).join('');
+  return `
+    <div class="panel-eyebrow">🚗 Car Rental · ${d.company||''}</div>
+    <div class="panel-title">${d.name}</div>
+    <div class="panel-addr">📍 ${d.loc}</div>
+    ${d.agentNote?`<div class="agent-note-panel" style="margin-top:16px"><div class="aa">Nate</div><p><strong>Nate's note:</strong> ${d.agentNote}</p></div>`:''}
+    <div class="section-t">Rental Details</div>
+    <div class="detail-meta-grid">
+      ${d.pickup?`<div class="detail-meta-cell"><label>Pick-Up</label><span>${d.pickup}</span></div>`:''}
+      ${d.dropoff?`<div class="detail-meta-cell"><label>Drop-Off</label><span>${d.dropoff}</span></div>`:''}
+      ${d.seats?`<div class="detail-meta-cell"><label>Seats</label><span>${d.seats}</span></div>`:''}
+      ${d.transmission?`<div class="detail-meta-cell"><label>Transmission</label><span>${d.transmission}</span></div>`:''}
+      ${d.mileage?`<div class="detail-meta-cell"><label>Mileage</label><span>${d.mileage}</span></div>`:''}
+      ${d.cancellation?`<div class="detail-meta-cell"><label>Cancellation</label><span>${d.cancellation}</span></div>`:''}
+    </div>
+    ${inclHTML?`<div class="section-t">Included</div><div class="includes-list">${inclHTML}</div>`:''}
+    <div class="section-t">Price</div>
+    <div class="detail-meta-grid">
+      <div class="detail-meta-cell"><label>Per Day</label><span>$${d.price}</span></div>
+      ${d.totalDays?`<div class="detail-meta-cell"><label>Total (${d.totalDays} days)</label><span>$${d.price * d.totalDays}</span></div>`:''}
+    </div>
+    ${d.bookingLink?`<a href="${d.bookingLink}" target="_blank" style="display:block;margin-top:16px;text-align:center;background:var(--brand);color:white;padding:14px;border-radius:var(--radius-sm);font-weight:700;text-decoration:none;font-family:'Outfit',sans-serif;font-size:14px;">Reserve Car →</a>`:''}
+    <button class="save-panel-btn ${saved?'saved-state':'unsaved'}" id="savePanelBtn" onclick="toggleSavePanel(${d.id})">${saved?'♥ Saved to My Picks':'♡ Save to My Picks'}</button>`;
+}
+
+function transferPanel(d, saved) {
+  const inclHTML = (d.includes||[]).map(i=>`<div class="includes-item"><div class="inc-dot"></div>${i}</div>`).join('');
+  return `
+    <div class="panel-eyebrow">🚌 Transfer · ${d.vehicleType||''}</div>
+    <div class="panel-title">${d.name}</div>
+    <div class="panel-addr">📍 ${d.loc}</div>
+    ${d.agentNote?`<div class="agent-note-panel" style="margin-top:16px"><div class="aa">Nate</div><p><strong>Nate's note:</strong> ${d.agentNote}</p></div>`:''}
+    <div class="section-t">Transfer Details</div>
+    <div class="detail-meta-grid">
+      ${d.pickupTime?`<div class="detail-meta-cell"><label>Pick-Up Time</label><span>${d.pickupTime}</span></div>`:''}
+      ${d.duration?`<div class="detail-meta-cell"><label>Duration</label><span>${d.duration}</span></div>`:''}
+      ${d.passengers?`<div class="detail-meta-cell"><label>Passengers</label><span>${d.passengers}</span></div>`:''}
+      ${d.vehicleType?`<div class="detail-meta-cell"><label>Vehicle</label><span>${d.vehicleType}</span></div>`:''}
+    </div>
+    ${inclHTML?`<div class="section-t">Included</div><div class="includes-list">${inclHTML}</div>`:''}
+    <div class="section-t">Price</div>
+    <div class="detail-meta-grid">
+      <div class="detail-meta-cell"><label>${d.priceLabel||'Flat Rate'}</label><span>$${d.price}</span></div>
+    </div>
+    ${d.bookingLink?`<a href="${d.bookingLink}" target="_blank" style="display:block;margin-top:16px;text-align:center;background:var(--brand);color:white;padding:14px;border-radius:var(--radius-sm);font-weight:700;text-decoration:none;font-family:'Outfit',sans-serif;font-size:14px;">Book Transfer →</a>`:''}
+    <button class="save-panel-btn ${saved?'saved-state':'unsaved'}" id="savePanelBtn" onclick="toggleSavePanel(${d.id})">${saved?'♥ Saved to My Picks':'♡ Save to My Picks'}</button>`;
+}
+
+function cruisePanel(d, saved) {
+  const inclHTML  = (d.includes||[]).map(i=>`<div class="includes-item"><div class="inc-dot"></div>${i}</div>`).join('');
+  const exclHTML  = (d.excludes||[]).map(i=>`<div class="includes-item"><div class="inc-dot" style="background:var(--ink-light)"></div>${i}</div>`).join('');
+  const portsHTML = (d.ports||[]).map((p,i)=>`<div class="includes-item"><div class="inc-dot"></div>Day ${i+1}: ${p}</div>`).join('');
+  return `
+    <div class="panel-eyebrow">🚢 Cruise · ${d.line||''}</div>
+    <div class="panel-title">${d.name}</div>
+    <div class="panel-addr">📍 ${d.loc}</div>
+    ${d.agentNote?`<div class="agent-note-panel" style="margin-top:16px"><div class="aa">Nate</div><p><strong>Nate's note:</strong> ${d.agentNote}</p></div>`:''}
+    <div class="section-t">Cruise Details</div>
+    <div class="detail-meta-grid">
+      ${d.departure?`<div class="detail-meta-cell"><label>Departure</label><span>${d.departure}</span></div>`:''}
+      ${d.duration?`<div class="detail-meta-cell"><label>Duration</label><span>${d.duration}</span></div>`:''}
+      ${d.cabinType?`<div class="detail-meta-cell"><label>Cabin</label><span>${d.cabinType}</span></div>`:''}
+      <div class="detail-meta-cell"><label>${d.priceLabel||'Per Person'}</label><span>$${d.price}</span></div>
+    </div>
+    ${portsHTML?`<div class="section-t">Ports of Call</div><div class="includes-list">${portsHTML}</div>`:''}
+    ${inclHTML?`<div class="section-t">What's Included</div><div class="includes-list">${inclHTML}</div>`:''}
+    ${exclHTML?`<div class="section-t">Not Included</div><div class="includes-list">${exclHTML}</div>`:''}
+    ${d.bookingLink?`<a href="${d.bookingLink}" target="_blank" style="display:block;margin-top:16px;text-align:center;background:var(--brand);color:white;padding:14px;border-radius:var(--radius-sm);font-weight:700;text-decoration:none;font-family:'Outfit',sans-serif;font-size:14px;">View Cruise →</a>`:''}
+    <button class="save-panel-btn ${saved?'saved-state':'unsaved'}" id="savePanelBtn" onclick="toggleSavePanel(${d.id})">${saved?'♥ Saved to My Picks':'♡ Save to My Picks'}</button>`;
+}
+
+function parkPanel(d, saved) {
+  const inclHTML  = (d.includes||[]).map(i=>`<div class="includes-item"><div class="inc-dot"></div>${i}</div>`).join('');
+  const addOnHTML = (d.addOns||[]).map(i=>`<div class="includes-item"><div class="inc-dot" style="background:var(--gold)"></div>${i}</div>`).join('');
+  return `
+    <div class="panel-eyebrow">🎢 Theme Park · ${d.parkSystem||''}</div>
+    <div class="panel-title">${d.name}</div>
+    <div class="panel-addr">📍 ${d.loc}</div>
+    ${d.agentNote?`<div class="agent-note-panel" style="margin-top:16px"><div class="aa">Nate</div><p><strong>Nate's note:</strong> ${d.agentNote}</p></div>`:''}
+    <div class="section-t">Ticket Details</div>
+    <div class="detail-meta-grid">
+      ${d.ticketType?`<div class="detail-meta-cell"><label>Ticket Type</label><span>${d.ticketType}</span></div>`:''}
+      ${d.date?`<div class="detail-meta-cell"><label>Date</label><span>${d.date}</span></div>`:''}
+      <div class="detail-meta-cell"><label>${d.priceLabel||'Per Person'}</label><span>$${d.price}</span></div>
+    </div>
+    ${inclHTML?`<div class="section-t">Included</div><div class="includes-list">${inclHTML}</div>`:''}
+    ${addOnHTML?`<div class="section-t">Available Add-Ons</div><div class="includes-list">${addOnHTML}</div>`:''}
+    ${d.bookingLink?`<a href="${d.bookingLink}" target="_blank" style="display:block;margin-top:16px;text-align:center;background:var(--brand);color:white;padding:14px;border-radius:var(--radius-sm);font-weight:700;text-decoration:none;font-family:'Outfit',sans-serif;font-size:14px;">Get Tickets →</a>`:''}
+    <button class="save-panel-btn ${saved?'saved-state':'unsaved'}" id="savePanelBtn" onclick="toggleSavePanel(${d.id})">${saved?'♥ Saved to My Picks':'♡ Save to My Picks'}</button>`;
+}
+
+// ── SELECT ROOM (hotel booking flow) ──
+function selectRoom(hotelId, roomName, price) {
+  const d = DATA.find(x => x.id === hotelId);
+  if (!d) return;
+  shortlist.add(hotelId);
+  // Store selected room on the data object for shortlist display
+  d._selectedRoom = roomName;
+  d._selectedPrice = price;
+  updateShortlistUI();
+  // Update panel button
+  const btn = document.getElementById('savePanelBtn');
+  if (btn) { btn.className = 'save-panel-btn saved-state'; btn.textContent = '♥ Saved to My Picks'; }
+  // Flash shortlist count
+  const cnt = document.getElementById('shortlistCount');
+  cnt.style.transform = 'scale(1.4)';
+  setTimeout(() => cnt.style.transform = '', 300);
+}
+
+// ── SAVE / UNSAVE ──
+function toggleSave(evt, id) {
+  evt.stopPropagation();
+  if (shortlist.has(id)) shortlist.delete(id);
+  else shortlist.add(id);
+  updateShortlistUI();
+  renderCards();
+}
+
+function toggleSavePanel(id) {
+  if (shortlist.has(id)) shortlist.delete(id);
+  else shortlist.add(id);
+  const saved = shortlist.has(id);
+  const btn = document.getElementById('savePanelBtn');
+  if (btn) {
+    btn.className = 'save-panel-btn ' + (saved ? 'saved-state' : 'unsaved');
+    btn.textContent = saved ? '♥ Saved to My Picks' : '♡ Save to My Picks';
+  }
+  updateShortlistUI();
+  renderCards();
+}
+
+function updateShortlistUI() {
+  const count = shortlist.size;
+  document.getElementById('shortlistCount').textContent = count;
+  renderShortlist();
+}
+
+// ── SHORTLIST PANEL ──
+function viewShortlist() {
+  closePanel();
+  document.getElementById('shortlistPanel').classList.add('on');
+  document.getElementById('overlay').classList.add('on');
+  shortlistOpen = true;
+  document.body.style.overflow = 'hidden';
+  renderShortlist();
+}
+
+function closeShortlist() {
+  document.getElementById('shortlistPanel').classList.remove('on');
+  document.getElementById('overlay').classList.remove('on');
+  shortlistOpen = false;
+  document.body.style.overflow = '';
+}
+
+function renderShortlist() {
+  const container = document.getElementById('shortlistItems');
+  const footer    = document.getElementById('shortlistFooter');
+
+  if (shortlist.size === 0) {
+    container.innerHTML = `<div class="sp-empty"><div style="font-size:36px">♡</div><p>Tap the heart on any option to save it here.</p></div>`;
+    footer.style.display = 'none';
+    return;
+  }
+
+  let total = 0;
+  let html = '';
+  shortlist.forEach(id => {
+    const d = DATA.find(x => x.id === id);
+    if (!d) return;
+    const price = d._selectedPrice || d.price || 0;
+    total += price;
+    html += `
+      <div class="sp-item">
+        <div class="sp-item-color" style="background:${d.gradient}"></div>
+        <div>
+          <div class="sp-item-name">${d.name}</div>
+          <div class="sp-item-sub">${d.type === 'hotel' && d._selectedRoom ? d._selectedRoom : d.loc}</div>
+        </div>
+        ${price ? `<div class="sp-item-price">$${price}</div>` : ''}
+        <button class="sp-remove" onclick="removeFromShortlist(${id})">✕</button>
+      </div>`;
+  });
+
+  container.innerHTML = html;
+  document.getElementById('spTotal').textContent = total ? `$${total}` : '—';
+  footer.style.display = 'block';
+}
+
+function removeFromShortlist(id) {
+  shortlist.delete(id);
+  const d = DATA.find(x => x.id === id);
+  if (d) { delete d._selectedRoom; delete d._selectedPrice; }
+  updateShortlistUI();
+  if (shortlist.size === 0) document.getElementById('shortlistFooter').style.display = 'none';
+}
+
+// ── SUBMIT ──
+// ── BOOKING PAYMENT LINKS ──────────────────────────────────────────
+// ← Paste your HubSpot booking fee payment URLs here when ready:
+const STARRED_URL = '<!-- STARRED_BOOKING_URL -->';
+const EXPRESS_URL = '<!-- EXPRESS_BOOKING_URL -->';
+
+async function bookNow(tier) {
+  // Build line items from shortlist
+  const lineItems = [];
+  let total = 0;
+  shortlist.forEach(id => {
+    const d = DATA.find(x => x.id === id);
+    if (!d) return;
+    const price = d._selectedPrice || d.price || 0;
+    total += price;
+    lineItems.push(d.name + (d._selectedRoom ? ' · ' + d._selectedRoom : ''));
+  });
+
+  const payload = {
+    _subject:         `New ${tier.charAt(0).toUpperCase()+tier.slice(1)} Booking — ${CLIENT_INFO.name} · ${CLIENT_INFO.tripName}`,
+    _cc:              '3108455282@tmomail.net',
+    'Client Name':    CLIENT_INFO.name,
+    'Client Email':   CLIENT_INFO.email,
+    'Client Phone':   CLIENT_INFO.phone,
+    'Trip':           CLIENT_INFO.tripName,
+    'Dates':          CLIENT_INFO.dates,
+    'Service Tier':   tier.charAt(0).toUpperCase() + tier.slice(1),
+    'Selected Items': lineItems.join(', '),
+    'Estimated Total': total ? '$' + total.toLocaleString() : 'TBD',
+  };
+
+  // Fire email via Formspree (non-blocking)
+  if (CLIENT_INFO.formspreeId) {
+    fetch(`https://formspree.io/f/${CLIENT_INFO.formspreeId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+  }
+
+  // Fire text via Zapier (non-blocking)
+  if (CLIENT_INFO.zapierWebhook) {
+    fetch(CLIENT_INFO.zapierWebhook, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...payload,
+        sms_body: `💳 ${payload['Service Tier'].toUpperCase()} BOOKING — ${CLIENT_INFO.tripName}\nClient: ${CLIENT_INFO.name} (${CLIENT_INFO.phone})\nItems: ${lineItems.join(', ')}\nTotal: ${payload['Estimated Total']}`,
+      }),
+    }).catch(() => {});
+  }
+
+  // Open HubSpot payment link
+  const url = tier === 'starred' ? STARRED_URL : EXPRESS_URL;
+  window.open(url, '_blank');
+}
+
+// ── CLOSE ──
+function closePanel() {
+  document.getElementById('panel').classList.remove('on');
+  if (!shortlistOpen) document.getElementById('overlay').classList.remove('on');
+  panelOpen = false;
+  if (!shortlistOpen) document.body.style.overflow = '';
+}
+
+function closeAll() {
+  closePanel();
+  closeShortlist();
+}
+
+// ── ESC KEY ──
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+
+// ── INIT ──
+buildFilters();
+renderCards();
+</script>
+</body>
+</html>
